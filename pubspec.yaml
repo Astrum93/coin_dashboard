@@ -20,6 +20,7 @@ version: 1.0.0+1
 
 environment:
   sdk: ^3.9.0
+  flutter: ">=3.44.0" # .fvmrc 와 맞춤. 낮은 SDK 로 pub get 하면 여기서 막힌다
 
 # 실행에 필요한 패키지 목록.
 # 새 버전 확인: `flutter pub outdated` / 일괄 업데이트: `flutter pub upgrade --major-versions`
@@ -42,6 +43,10 @@ dependencies:
 
   # ── 코드 생성 (모델) ────────────────────────
   freezed_annotation: ^3.1.0 # freezed 어노테이션(생성 코드가 참조하므로 일반 의존성)
+  json_annotation: ^4.12.0 # JSON 직렬화 어노테이션(생성 코드가 참조하므로 일반 의존성)
+
+  # ── 포맷 ────────────────────────────────────
+  intl: ^0.20.3 # 가격·등락률·거래대금 숫자 포맷
 
 dev_dependencies:
   # ── 테스트 ──────────────────────────────────
@@ -54,6 +59,7 @@ dev_dependencies:
   # ── 코드 생성 (freezed / build_runner) ──────
   freezed: ^3.2.5 # 불변 모델·copyWith·==·toString 자동 생성
   build_runner: ^2.15.1 # 코드 생성 실행기 (dart run build_runner build)
+  json_serializable: ^6.14.1 # fromJson/toJson 자동 생성기
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
