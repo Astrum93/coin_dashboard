@@ -1,11 +1,11 @@
 {
-    "name": "coin_dashboard",
-    "short_name": "coin_dashboard",
+    "name": "코인 대시보드",
+    "short_name": "코인 대시보드",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#0E0F12",
+    "theme_color": "#0E0F12",
+    "description": "업비트 원화 마켓 시세 대시보드",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
