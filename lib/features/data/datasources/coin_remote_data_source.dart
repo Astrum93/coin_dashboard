@@ -3,11 +3,26 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:coin_dashboard/common/constants/api_constants.dart';
+import 'package:coin_dashboard/features/data/models/candle_model.dart';
 import 'package:coin_dashboard/features/data/models/coin_model.dart';
+import 'package:coin_dashboard/features/data/models/market_ticker_model.dart';
+import 'package:coin_dashboard/features/domain/entities/candle.dart';
 
 /// 원격 API 데이터 소스.
 abstract class CoinRemoteDataSource {
   Future<CoinModel> fetchPrice({required String id, required String symbol});
+
+  /// 마켓 코드 → 한글명. 예: {'KRW-BTC': '비트코인'}
+  Future<Map<String, String>> fetchMarketNames();
+
+  Future<List<MarketTickerModel>> fetchKrwTickers();
+
+  /// 응답 그대로 최신 캔들이 앞에 온다.
+  Future<List<CandleModel>> fetchCandles({
+    required String market,
+    required CandleUnit unit,
+    required int count,
+  });
 }
 
 /// 업비트 구현. 실패 시 예외를 던진다 (Result 변환은 리포지토리 몫).
@@ -22,15 +37,7 @@ class CoinRemoteDataSourceImpl implements CoinRemoteDataSource {
     required String id,
     required String symbol,
   }) async {
-    final url = Uri.parse(ApiConstants.ticker(id));
-    final response = await client.get(url);
-
-    if (response.statusCode != 200) {
-      throw Exception('서버 응답 오류: ${response.statusCode}');
-    }
-
-    // 응답은 배열. 마켓 하나만 요청했으므로 첫 요소를 쓴다.
-    final list = jsonDecode(response.body) as List<dynamic>;
+    final list = await _getList(ApiConstants.ticker(id));
     if (list.isEmpty) {
       throw Exception('시세 없음: $id');
     }
@@ -38,5 +45,47 @@ class CoinRemoteDataSourceImpl implements CoinRemoteDataSource {
       symbol: symbol,
       json: list.first as Map<String, dynamic>,
     );
+  }
+
+  @override
+  Future<Map<String, String>> fetchMarketNames() async {
+    final list = await _getList(ApiConstants.marketAll);
+    return {
+      for (final item in list.cast<Map<String, dynamic>>())
+        item['market'] as String: item['korean_name'] as String,
+    };
+  }
+
+  @override
+  Future<List<MarketTickerModel>> fetchKrwTickers() async {
+    final list = await _getList(ApiConstants.krwTickers);
+    return list
+        .cast<Map<String, dynamic>>()
+        .map(MarketTickerModel.fromJson)
+        .toList();
+  }
+
+  @override
+  Future<List<CandleModel>> fetchCandles({
+    required String market,
+    required CandleUnit unit,
+    required int count,
+  }) async {
+    final path = switch (unit) {
+      CandleUnit.minutes30 => 'minutes/30',
+      CandleUnit.minutes240 => 'minutes/240',
+      CandleUnit.days => 'days',
+      CandleUnit.weeks => 'weeks',
+    };
+    final list = await _getList(ApiConstants.candles(path, market, count));
+    return list.cast<Map<String, dynamic>>().map(CandleModel.fromJson).toList();
+  }
+
+  Future<List<dynamic>> _getList(String url) async {
+    final response = await client.get(Uri.parse(url));
+    if (response.statusCode != 200) {
+      throw Exception('서버 응답 오류: ${response.statusCode}');
+    }
+    return jsonDecode(utf8.decode(response.bodyBytes)) as List<dynamic>;
   }
 }

@@ -1,7 +1,9 @@
 import 'package:coin_dashboard/features/data/datasources/coin_remote_data_source.dart';
 import 'package:coin_dashboard/features/data/repositories/coin_repository_impl.dart';
 import 'package:coin_dashboard/features/domain/repositories/coin_repository.dart';
+import 'package:coin_dashboard/features/domain/usecases/get_candles.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_coin_price.dart';
+import 'package:coin_dashboard/features/domain/usecases/get_krw_tickers.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,5 +20,7 @@ class AppBinding extends Bindings {
       () => CoinRepositoryImpl(Get.find<CoinRemoteDataSource>()),
     );
     Get.lazyPut<GetCoinPrice>(() => GetCoinPrice(Get.find<CoinRepository>()));
+    Get.lazyPut<GetKrwTickers>(() => GetKrwTickers(Get.find<CoinRepository>()));
+    Get.lazyPut<GetCandles>(() => GetCandles(Get.find<CoinRepository>()));
   }
 }
