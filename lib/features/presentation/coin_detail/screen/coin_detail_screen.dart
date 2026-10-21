@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:coin_dashboard/app/app_routes.dart';
+import 'package:coin_dashboard/app/router/app_routes.dart';
 
-/// 코인 상세 화면 (아직은 골격만 있는 자리표시자).
-/// [symbol] 은 URL의 :symbol 부분에서 넘어온다. 예) /coin/BTC → 'BTC'
-///
-/// 학습 포인트: 웹에서 주소창에 '/coin/BTC'를 직접 쳐서 새로고침해도
-/// 이 화면이 바로 열린다 = 딥링크가 동작한다는 뜻.
+/// 코인 상세 화면 (골격만). [symbol] 은 URL 의 :symbol.
 class CoinDetailScreen extends StatelessWidget {
   const CoinDetailScreen({super.key, required this.symbol});
 
