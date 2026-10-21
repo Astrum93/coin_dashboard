@@ -95,6 +95,7 @@ class _RatioBar extends StatelessWidget {
       child: SizedBox(
         height: 6,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           spacing: 2,
           children: [
             if (rise > 0)

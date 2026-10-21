@@ -99,10 +99,13 @@ class _PillButton extends StatelessWidget {
             height: 36,
             constraints: const BoxConstraints(minWidth: 48),
             padding: const EdgeInsets.symmetric(horizontal: 14),
-            alignment: Alignment.center,
-            child: Text(
-              label,
-              style: AppTextStyles.label.copyWith(color: foreground),
+            // widthFactor 1: Wrap 안에서도 글자 폭만큼만 차지한다.
+            child: Center(
+              widthFactor: 1,
+              child: Text(
+                label,
+                style: AppTextStyles.label.copyWith(color: foreground),
+              ),
             ),
           ),
         ),
