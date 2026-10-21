@@ -72,6 +72,29 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  # 라이선스 화면(showLicensePage)에 띄울 폰트 라이선스 원문
+  assets:
+    - assets/fonts/OFL.txt
+
+  # 디자인 가이드 폰트 (IBM Plex, OFL). 본문·UI = IBM Plex Sans KR, 숫자 = IBM Plex Mono
+  fonts:
+    - family: IBMPlexSansKR
+      fonts:
+        - asset: assets/fonts/IBMPlexSansKR-Regular.ttf
+        - asset: assets/fonts/IBMPlexSansKR-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexSansKR-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/IBMPlexSansKR-Bold.ttf
+          weight: 700
+    - family: IBMPlexMono
+      fonts:
+        - asset: assets/fonts/IBMPlexMono-Regular.ttf
+        - asset: assets/fonts/IBMPlexMono-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexMono-SemiBold.ttf
+          weight: 600
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
