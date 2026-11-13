@@ -10,6 +10,7 @@ abstract class CandleModel with _$CandleModel {
   const CandleModel._();
 
   const factory CandleModel({
+    required String candleDateTimeUtc, // 다음 페이지 요청의 to 로 쓴다
     required String candleDateTimeKst, // 예: '2026-10-21T23:00:00'
     required double openingPrice,
     required double highPrice,
@@ -21,6 +22,7 @@ abstract class CandleModel with _$CandleModel {
   /// 업비트 캔들 한 건 파싱.
   factory CandleModel.fromJson(Map<String, dynamic> json) {
     return CandleModel(
+      candleDateTimeUtc: json['candle_date_time_utc'] as String,
       candleDateTimeKst: json['candle_date_time_kst'] as String,
       openingPrice: (json['opening_price'] as num).toDouble(),
       highPrice: (json['high_price'] as num).toDouble(),

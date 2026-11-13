@@ -2,7 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:coin_dashboard/app/router/app_routes.dart';
-// import 'package:coin_dashboard/features/presentation/coin_detail/screen/coin_detail_screen.dart';
+import 'package:coin_dashboard/features/presentation/coin_detail/binding/coin_detail_binding.dart';
+import 'package:coin_dashboard/features/presentation/coin_detail/screen/coin_detail_screen.dart';
 import 'package:coin_dashboard/features/presentation/home/binding/home_binding.dart';
 import 'package:coin_dashboard/features/presentation/home/screen/home_screen.dart';
 
@@ -21,14 +22,14 @@ final GoRouter appRouter = GoRouter(
         return const HomeScreen();
       },
       routes: [
-        // 코인 상세 — 다음 단계에서 주석 해제.
-        // GoRoute(
-        //   path: AppRoutes.coinDetail,
-        //   builder: (context, state) {
-        //     final symbol = state.pathParameters['symbol'] ?? '';
-        //     return CoinDetailScreen(symbol: symbol);
-        //   },
-        // ),
+        GoRoute(
+          path: AppRoutes.coinDetail,
+          builder: (context, state) {
+            final symbol = (state.pathParameters['symbol'] ?? '').toUpperCase();
+            CoinDetailBinding(symbol).dependencies();
+            return CoinDetailScreen(symbol: symbol);
+          },
+        ),
       ],
     ),
   ],

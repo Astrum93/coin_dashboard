@@ -2,7 +2,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
+import 'package:coin_dashboard/app/router/app_routes.dart';
 import 'package:coin_dashboard/app/theme/app_colors.dart';
 import 'package:coin_dashboard/app/theme/app_text_styles.dart';
 import 'package:coin_dashboard/common/utils/formatter.dart';
@@ -14,7 +16,7 @@ import 'package:coin_dashboard/common/widgets/segmented_pills.dart';
 import 'package:coin_dashboard/features/domain/entities/market_ticker.dart';
 import 'package:coin_dashboard/features/presentation/home/controller/home_controller.dart';
 
-/// 원화 마켓 시세 표. 좁은 화면에선 가로로 스크롤된다.
+/// 원화 마켓 시세 표. 좁은 화면에선 가로로 스크롤된다. 행을 누르면 상세로 간다.
 class MarketTable extends StatelessWidget {
   const MarketTable({super.key});
 
@@ -173,84 +175,90 @@ class _TickerRow extends StatelessWidget {
     final volume = formatKrwCompact(ticker.tradePrice24h);
     final sign = ticker.changePrice >= 0 ? '+' : '-';
 
-    return Container(
-      constraints: const BoxConstraints(minHeight: 64),
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.DIVIDER)),
-      ),
-      child: Row(
-        spacing: 16,
-        children: [
-          Expanded(
-            flex: _flex[0],
-            child: Row(
-              children: [
-                CoinAvatar(symbol: ticker.symbol),
-                const SizedBox(width: 12),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        ticker.koreanName,
-                        style: AppTextStyles.BODY_STRONG,
-                        overflow: TextOverflow.ellipsis,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => context.go(AppRoutes.coinDetailPath(ticker.symbol)),
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 64),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          decoration: const BoxDecoration(
+            border: Border(bottom: BorderSide(color: AppColors.DIVIDER)),
+          ),
+          child: Row(
+            spacing: 16,
+            children: [
+              Expanded(
+                flex: _flex[0],
+                child: Row(
+                  children: [
+                    CoinAvatar(symbol: ticker.symbol),
+                    const SizedBox(width: 12),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            ticker.koreanName,
+                            style: AppTextStyles.BODY_STRONG,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            '${ticker.symbol}/KRW',
+                            style: AppTextStyles.CAPTION,
+                          ),
+                        ],
                       ),
-                      Text(
-                        '${ticker.symbol}/KRW',
-                        style: AppTextStyles.CAPTION,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: _flex[1],
-            child: Text(
-              formatPrice(ticker.price),
-              textAlign: TextAlign.right,
-              style: AppTextStyles.NUMBER.copyWith(color: color),
-            ),
-          ),
-          Expanded(
-            flex: _flex[2],
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                ChangeBadge(rate: ticker.changeRate),
-                const SizedBox(height: 2),
-                Text(
-                  '$sign${formatPrice(ticker.changePrice.abs())}',
-                  style: AppTextStyles.NUMBER_SMALL.copyWith(
-                    color: AppColors.TEXT_MUTED,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: _flex[3],
-            child: Text(
-              '${volume.value}${volume.unit}',
-              textAlign: TextAlign.right,
-              style: AppTextStyles.NUMBER,
-            ),
-          ),
-          SizedBox(
-            width: _favoriteWidth,
-            child: Center(
-              child: FavoriteButton(
-                isFavorite: isFavorite,
-                onPressed: onToggleFavorite,
-                bordered: false,
               ),
-            ),
+              Expanded(
+                flex: _flex[1],
+                child: Text(
+                  formatPrice(ticker.price),
+                  textAlign: TextAlign.right,
+                  style: AppTextStyles.NUMBER.copyWith(color: color),
+                ),
+              ),
+              Expanded(
+                flex: _flex[2],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    ChangeBadge(rate: ticker.changeRate),
+                    const SizedBox(height: 2),
+                    Text(
+                      '$sign${formatPrice(ticker.changePrice.abs())}',
+                      style: AppTextStyles.NUMBER_SMALL.copyWith(
+                        color: AppColors.TEXT_MUTED,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: _flex[3],
+                child: Text(
+                  '${volume.value}${volume.unit}',
+                  textAlign: TextAlign.right,
+                  style: AppTextStyles.NUMBER,
+                ),
+              ),
+              SizedBox(
+                width: _favoriteWidth,
+                child: Center(
+                  child: FavoriteButton(
+                    isFavorite: isFavorite,
+                    onPressed: onToggleFavorite,
+                    bordered: false,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

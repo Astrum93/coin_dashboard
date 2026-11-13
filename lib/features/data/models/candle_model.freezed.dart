@@ -14,6 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CandleModel {
 
+ String get candleDateTimeUtc;// 다음 페이지 요청의 to 로 쓴다
  String get candleDateTimeKst;// 예: '2026-10-21T23:00:00'
  double get openingPrice; double get highPrice; double get lowPrice; double get tradePrice; double get candleAccTradeVolume;
 /// Create a copy of CandleModel
@@ -26,16 +27,16 @@ $CandleModelCopyWith<CandleModel> get copyWith => _$CandleModelCopyWithImpl<Cand
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CandleModel&&(identical(other.candleDateTimeKst, candleDateTimeKst) || other.candleDateTimeKst == candleDateTimeKst)&&(identical(other.openingPrice, openingPrice) || other.openingPrice == openingPrice)&&(identical(other.highPrice, highPrice) || other.highPrice == highPrice)&&(identical(other.lowPrice, lowPrice) || other.lowPrice == lowPrice)&&(identical(other.tradePrice, tradePrice) || other.tradePrice == tradePrice)&&(identical(other.candleAccTradeVolume, candleAccTradeVolume) || other.candleAccTradeVolume == candleAccTradeVolume));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CandleModel&&(identical(other.candleDateTimeUtc, candleDateTimeUtc) || other.candleDateTimeUtc == candleDateTimeUtc)&&(identical(other.candleDateTimeKst, candleDateTimeKst) || other.candleDateTimeKst == candleDateTimeKst)&&(identical(other.openingPrice, openingPrice) || other.openingPrice == openingPrice)&&(identical(other.highPrice, highPrice) || other.highPrice == highPrice)&&(identical(other.lowPrice, lowPrice) || other.lowPrice == lowPrice)&&(identical(other.tradePrice, tradePrice) || other.tradePrice == tradePrice)&&(identical(other.candleAccTradeVolume, candleAccTradeVolume) || other.candleAccTradeVolume == candleAccTradeVolume));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,candleDateTimeKst,openingPrice,highPrice,lowPrice,tradePrice,candleAccTradeVolume);
+int get hashCode => Object.hash(runtimeType,candleDateTimeUtc,candleDateTimeKst,openingPrice,highPrice,lowPrice,tradePrice,candleAccTradeVolume);
 
 @override
 String toString() {
-  return 'CandleModel(candleDateTimeKst: $candleDateTimeKst, openingPrice: $openingPrice, highPrice: $highPrice, lowPrice: $lowPrice, tradePrice: $tradePrice, candleAccTradeVolume: $candleAccTradeVolume)';
+  return 'CandleModel(candleDateTimeUtc: $candleDateTimeUtc, candleDateTimeKst: $candleDateTimeKst, openingPrice: $openingPrice, highPrice: $highPrice, lowPrice: $lowPrice, tradePrice: $tradePrice, candleAccTradeVolume: $candleAccTradeVolume)';
 }
 
 
@@ -46,7 +47,7 @@ abstract mixin class $CandleModelCopyWith<$Res>  {
   factory $CandleModelCopyWith(CandleModel value, $Res Function(CandleModel) _then) = _$CandleModelCopyWithImpl;
 @useResult
 $Res call({
- String candleDateTimeKst, double openingPrice, double highPrice, double lowPrice, double tradePrice, double candleAccTradeVolume
+ String candleDateTimeUtc, String candleDateTimeKst, double openingPrice, double highPrice, double lowPrice, double tradePrice, double candleAccTradeVolume
 });
 
 
@@ -63,9 +64,10 @@ class _$CandleModelCopyWithImpl<$Res>
 
 /// Create a copy of CandleModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? candleDateTimeKst = null,Object? openingPrice = null,Object? highPrice = null,Object? lowPrice = null,Object? tradePrice = null,Object? candleAccTradeVolume = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? candleDateTimeUtc = null,Object? candleDateTimeKst = null,Object? openingPrice = null,Object? highPrice = null,Object? lowPrice = null,Object? tradePrice = null,Object? candleAccTradeVolume = null,}) {
   return _then(_self.copyWith(
-candleDateTimeKst: null == candleDateTimeKst ? _self.candleDateTimeKst : candleDateTimeKst // ignore: cast_nullable_to_non_nullable
+candleDateTimeUtc: null == candleDateTimeUtc ? _self.candleDateTimeUtc : candleDateTimeUtc // ignore: cast_nullable_to_non_nullable
+as String,candleDateTimeKst: null == candleDateTimeKst ? _self.candleDateTimeKst : candleDateTimeKst // ignore: cast_nullable_to_non_nullable
 as String,openingPrice: null == openingPrice ? _self.openingPrice : openingPrice // ignore: cast_nullable_to_non_nullable
 as double,highPrice: null == highPrice ? _self.highPrice : highPrice // ignore: cast_nullable_to_non_nullable
 as double,lowPrice: null == lowPrice ? _self.lowPrice : lowPrice // ignore: cast_nullable_to_non_nullable
@@ -156,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String candleDateTimeKst,  double openingPrice,  double highPrice,  double lowPrice,  double tradePrice,  double candleAccTradeVolume)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String candleDateTimeUtc,  String candleDateTimeKst,  double openingPrice,  double highPrice,  double lowPrice,  double tradePrice,  double candleAccTradeVolume)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CandleModel() when $default != null:
-return $default(_that.candleDateTimeKst,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradePrice,_that.candleAccTradeVolume);case _:
+return $default(_that.candleDateTimeUtc,_that.candleDateTimeKst,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradePrice,_that.candleAccTradeVolume);case _:
   return orElse();
 
 }
@@ -177,10 +179,10 @@ return $default(_that.candleDateTimeKst,_that.openingPrice,_that.highPrice,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String candleDateTimeKst,  double openingPrice,  double highPrice,  double lowPrice,  double tradePrice,  double candleAccTradeVolume)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String candleDateTimeUtc,  String candleDateTimeKst,  double openingPrice,  double highPrice,  double lowPrice,  double tradePrice,  double candleAccTradeVolume)  $default,) {final _that = this;
 switch (_that) {
 case _CandleModel():
-return $default(_that.candleDateTimeKst,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradePrice,_that.candleAccTradeVolume);case _:
+return $default(_that.candleDateTimeUtc,_that.candleDateTimeKst,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradePrice,_that.candleAccTradeVolume);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +199,10 @@ return $default(_that.candleDateTimeKst,_that.openingPrice,_that.highPrice,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String candleDateTimeKst,  double openingPrice,  double highPrice,  double lowPrice,  double tradePrice,  double candleAccTradeVolume)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String candleDateTimeUtc,  String candleDateTimeKst,  double openingPrice,  double highPrice,  double lowPrice,  double tradePrice,  double candleAccTradeVolume)?  $default,) {final _that = this;
 switch (_that) {
 case _CandleModel() when $default != null:
-return $default(_that.candleDateTimeKst,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradePrice,_that.candleAccTradeVolume);case _:
+return $default(_that.candleDateTimeUtc,_that.candleDateTimeKst,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradePrice,_that.candleAccTradeVolume);case _:
   return null;
 
 }
@@ -212,9 +214,11 @@ return $default(_that.candleDateTimeKst,_that.openingPrice,_that.highPrice,_that
 
 
 class _CandleModel extends CandleModel {
-  const _CandleModel({required this.candleDateTimeKst, required this.openingPrice, required this.highPrice, required this.lowPrice, required this.tradePrice, required this.candleAccTradeVolume}): super._();
+  const _CandleModel({required this.candleDateTimeUtc, required this.candleDateTimeKst, required this.openingPrice, required this.highPrice, required this.lowPrice, required this.tradePrice, required this.candleAccTradeVolume}): super._();
   
 
+@override final  String candleDateTimeUtc;
+// 다음 페이지 요청의 to 로 쓴다
 @override final  String candleDateTimeKst;
 // 예: '2026-10-21T23:00:00'
 @override final  double openingPrice;
@@ -233,16 +237,16 @@ _$CandleModelCopyWith<_CandleModel> get copyWith => __$CandleModelCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CandleModel&&(identical(other.candleDateTimeKst, candleDateTimeKst) || other.candleDateTimeKst == candleDateTimeKst)&&(identical(other.openingPrice, openingPrice) || other.openingPrice == openingPrice)&&(identical(other.highPrice, highPrice) || other.highPrice == highPrice)&&(identical(other.lowPrice, lowPrice) || other.lowPrice == lowPrice)&&(identical(other.tradePrice, tradePrice) || other.tradePrice == tradePrice)&&(identical(other.candleAccTradeVolume, candleAccTradeVolume) || other.candleAccTradeVolume == candleAccTradeVolume));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CandleModel&&(identical(other.candleDateTimeUtc, candleDateTimeUtc) || other.candleDateTimeUtc == candleDateTimeUtc)&&(identical(other.candleDateTimeKst, candleDateTimeKst) || other.candleDateTimeKst == candleDateTimeKst)&&(identical(other.openingPrice, openingPrice) || other.openingPrice == openingPrice)&&(identical(other.highPrice, highPrice) || other.highPrice == highPrice)&&(identical(other.lowPrice, lowPrice) || other.lowPrice == lowPrice)&&(identical(other.tradePrice, tradePrice) || other.tradePrice == tradePrice)&&(identical(other.candleAccTradeVolume, candleAccTradeVolume) || other.candleAccTradeVolume == candleAccTradeVolume));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,candleDateTimeKst,openingPrice,highPrice,lowPrice,tradePrice,candleAccTradeVolume);
+int get hashCode => Object.hash(runtimeType,candleDateTimeUtc,candleDateTimeKst,openingPrice,highPrice,lowPrice,tradePrice,candleAccTradeVolume);
 
 @override
 String toString() {
-  return 'CandleModel(candleDateTimeKst: $candleDateTimeKst, openingPrice: $openingPrice, highPrice: $highPrice, lowPrice: $lowPrice, tradePrice: $tradePrice, candleAccTradeVolume: $candleAccTradeVolume)';
+  return 'CandleModel(candleDateTimeUtc: $candleDateTimeUtc, candleDateTimeKst: $candleDateTimeKst, openingPrice: $openingPrice, highPrice: $highPrice, lowPrice: $lowPrice, tradePrice: $tradePrice, candleAccTradeVolume: $candleAccTradeVolume)';
 }
 
 
@@ -253,7 +257,7 @@ abstract mixin class _$CandleModelCopyWith<$Res> implements $CandleModelCopyWith
   factory _$CandleModelCopyWith(_CandleModel value, $Res Function(_CandleModel) _then) = __$CandleModelCopyWithImpl;
 @override @useResult
 $Res call({
- String candleDateTimeKst, double openingPrice, double highPrice, double lowPrice, double tradePrice, double candleAccTradeVolume
+ String candleDateTimeUtc, String candleDateTimeKst, double openingPrice, double highPrice, double lowPrice, double tradePrice, double candleAccTradeVolume
 });
 
 
@@ -270,9 +274,10 @@ class __$CandleModelCopyWithImpl<$Res>
 
 /// Create a copy of CandleModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? candleDateTimeKst = null,Object? openingPrice = null,Object? highPrice = null,Object? lowPrice = null,Object? tradePrice = null,Object? candleAccTradeVolume = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? candleDateTimeUtc = null,Object? candleDateTimeKst = null,Object? openingPrice = null,Object? highPrice = null,Object? lowPrice = null,Object? tradePrice = null,Object? candleAccTradeVolume = null,}) {
   return _then(_CandleModel(
-candleDateTimeKst: null == candleDateTimeKst ? _self.candleDateTimeKst : candleDateTimeKst // ignore: cast_nullable_to_non_nullable
+candleDateTimeUtc: null == candleDateTimeUtc ? _self.candleDateTimeUtc : candleDateTimeUtc // ignore: cast_nullable_to_non_nullable
+as String,candleDateTimeKst: null == candleDateTimeKst ? _self.candleDateTimeKst : candleDateTimeKst // ignore: cast_nullable_to_non_nullable
 as String,openingPrice: null == openingPrice ? _self.openingPrice : openingPrice // ignore: cast_nullable_to_non_nullable
 as double,highPrice: null == highPrice ? _self.highPrice : highPrice // ignore: cast_nullable_to_non_nullable
 as double,lowPrice: null == lowPrice ? _self.lowPrice : lowPrice // ignore: cast_nullable_to_non_nullable
