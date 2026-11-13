@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:coin_dashboard/app/app_licenses.dart';
 import 'package:coin_dashboard/app/theme/app_breakpoints.dart';
 import 'package:coin_dashboard/app/theme/app_text_styles.dart';
 import 'package:coin_dashboard/common/widgets/dashboard_shell.dart';
@@ -47,12 +48,7 @@ class HomeScreen extends StatelessWidget {
           ShellNavItem(
             icon: Icons.info_outline_rounded,
             label: '정보',
-            onTap: () => showLicensePage(
-              context: context,
-              applicationName: '코인 대시보드',
-              applicationLegalese:
-                  '시세: 업비트 공개 API · 코인 정보: CoinGecko · 뉴스: 블록미디어, 토큰포스트',
-            ),
+            onTap: () => showAppInfo(context),
           ),
         ],
         child: const _HomeBody(),

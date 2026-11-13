@@ -8,7 +8,7 @@ class GetCoinDetail {
 
   GetCoinDetail(this.repository);
 
-  /// [market] 예: 'KRW-BTC'
-  Future<Result<CoinDetail>> call(String market) =>
+  /// [market] 예: 'KRW-BTC'. 업비트에 없는 마켓이면 Ok(null).
+  Future<Result<CoinDetail?>> call(String market) =>
       repository.getCoinDetail(market);
 }

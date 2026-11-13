@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:coin_dashboard/app/app_licenses.dart';
 import 'package:coin_dashboard/app/router/app_routes.dart';
 import 'package:coin_dashboard/app/theme/app_breakpoints.dart';
+import 'package:coin_dashboard/app/theme/app_colors.dart';
 import 'package:coin_dashboard/app/theme/app_text_styles.dart';
 import 'package:coin_dashboard/common/widgets/dashboard_shell.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/controller/coin_detail_controller.dart';
@@ -69,12 +71,7 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
           ShellNavItem(
             icon: Icons.info_outline_rounded,
             label: '정보',
-            onTap: () => showLicensePage(
-              context: context,
-              applicationName: '코인 대시보드',
-              applicationLegalese:
-                  '시세: 업비트 공개 API · 코인 정보: CoinGecko · 뉴스: 블록미디어, 토큰포스트',
-            ),
+            onTap: () => showAppInfo(context),
           ),
         ],
         child: _DetailBody(symbol: widget.symbol),
@@ -94,6 +91,9 @@ class _DetailBody extends StatelessWidget {
 
     return Obx(() {
       final detail = controller.detail.value;
+      if (controller.notFound.value) {
+        return _NotFound(symbol: symbol);
+      }
       if (detail == null) {
         final error = controller.error.value;
         if (error == null) {
@@ -137,16 +137,12 @@ class _DetailBody extends StatelessWidget {
               ? 32.0
               : 16.0;
 
-          final main = <Widget>[
-            CandleChartCard(tag: symbol),
-            TradesCard(tag: symbol),
-            NewsCard(tag: symbol),
-          ];
-          final side = <Widget>[
-            DayStatsCard(detail: detail),
-            OrderbookCard(tag: symbol),
-            OfficialLinksCard(tag: symbol),
-          ];
+          final chart = CandleChartCard(tag: symbol);
+          final stats = DayStatsCard(detail: detail);
+          final orderbook = OrderbookCard(tag: symbol);
+          final trades = TradesCard(tag: symbol);
+          final news = NewsCard(tag: symbol);
+          final links = OfficialLinksCard(tag: symbol);
 
           return SingleChildScrollView(
             padding: EdgeInsets.fromLTRB(gutter, 20, gutter, 40),
@@ -166,21 +162,25 @@ class _DetailBody extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           spacing: 16,
-                          children: main,
+                          children: [chart, trades, news],
                         ),
                       ),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           spacing: 16,
-                          children: side,
+                          children: [stats, orderbook, links],
                         ),
                       ),
                     ],
                   )
                 else ...[
-                  ...main,
-                  ...side,
+                  chart,
+                  stats,
+                  orderbook,
+                  trades,
+                  news,
+                  links,
                 ],
               ],
             ),
@@ -188,5 +188,46 @@ class _DetailBody extends StatelessWidget {
         },
       );
     });
+  }
+}
+
+/// 업비트 원화 마켓에 없는 심볼로 들어왔을 때.
+class _NotFound extends StatelessWidget {
+  const _NotFound({required this.symbol});
+
+  final String symbol;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 12,
+          children: [
+            const Icon(
+              Icons.search_off_rounded,
+              size: 40,
+              color: AppColors.TEXT_MUTED,
+            ),
+            Text(
+              '업비트 원화 마켓에 \'$symbol\' 코인이 없어요.',
+              textAlign: TextAlign.center,
+              style: AppTextStyles.BODY_STRONG,
+            ),
+            const Text(
+              '주소를 확인하거나 홈의 원화 마켓에서 코인을 골라 주세요.',
+              textAlign: TextAlign.center,
+              style: AppTextStyles.CAPTION,
+            ),
+            OutlinedButton(
+              onPressed: () => context.go(AppRoutes.home),
+              child: const Text('홈으로'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -68,6 +68,9 @@ class CoinDetailController extends GetxController {
   final Rxn<CoinDetail> detail = Rxn<CoinDetail>();
   final RxnString error = RxnString();
 
+  /// 업비트에 없는 마켓. 확인되면 갱신을 멈춘다.
+  final RxBool notFound = false.obs;
+
   /// 오래된 것부터.
   final RxList<Candle> candles = <Candle>[].obs;
   final Rx<DetailPeriod> period = DetailPeriod.hour1.obs;
@@ -128,7 +131,12 @@ class CoinDetailController extends GetxController {
     final recent = await tradesFuture;
 
     switch (ticker) {
-      case Ok(value: final value):
+      case Ok(value: null):
+        notFound.value = true;
+        error.value = null;
+        _timer?.cancel();
+        _candleTimer?.cancel();
+      case Ok(value: final value?):
         detail.value = value;
         error.value = null;
         if (!_infoRequested) {

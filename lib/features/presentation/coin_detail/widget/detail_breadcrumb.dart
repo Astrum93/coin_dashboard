@@ -24,19 +24,23 @@ class DetailBreadcrumb extends StatelessWidget {
               minimumSize: const Size(0, 44),
               padding: const EdgeInsets.symmetric(horizontal: 4),
             ),
-            child: const Text('대시보드', style: AppTextStyles.LABEL),
+            child: Text(
+              '대시보드',
+              style: AppTextStyles.BODY.copyWith(color: AppColors.TEXT_MUTED),
+            ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6),
-            child: Text('/', style: AppTextStyles.CAPTION),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: Text(
+              '/',
+              style: AppTextStyles.BODY.copyWith(color: AppColors.TEXT_MUTED),
+            ),
           ),
           Flexible(
             child: Text(
               current,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.LABEL.copyWith(
-                color: AppColors.TEXT_PRIMARY,
-              ),
+              style: AppTextStyles.BODY_STRONG,
             ),
           ),
         ],

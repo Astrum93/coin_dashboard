@@ -49,10 +49,10 @@ class CoinRepositoryImpl implements CoinRepository {
   }
 
   @override
-  Future<Result<CoinDetail>> getCoinDetail(String market) async {
+  Future<Result<CoinDetail?>> getCoinDetail(String market) async {
     try {
       final name = (await _marketNames())[market];
-      if (name == null) return Err(_unknown(market));
+      if (name == null) return const Ok(null);
       final model = await remote.fetchTicker(market);
       return Ok(
         model.toEntity(koreanName: name.korean, englishName: name.english),

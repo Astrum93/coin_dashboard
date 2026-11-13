@@ -9,8 +9,8 @@ import 'package:coin_dashboard/features/domain/entities/trade.dart';
 abstract class CoinRepository {
   Future<Result<List<MarketTicker>>> getKrwTickers();
 
-  /// 업비트에 없는 마켓이면 Err.
-  Future<Result<CoinDetail>> getCoinDetail(String market);
+  /// 업비트에 없는 마켓이면 Ok(null).
+  Future<Result<CoinDetail?>> getCoinDetail(String market);
 
   Future<Result<Orderbook>> getOrderbook(String market, {required int levels});
 
