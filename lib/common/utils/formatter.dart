@@ -39,10 +39,15 @@ String formatPrice(double value) {
   );
 }
 
-/// 코인 수량 표기. 1,000 이상은 정수, 미만은 소수 셋째 자리까지. 2787.705 → "2,788"
+/// 코인 수량 표기. 값이 작을수록 소수 자릿수를 늘린다. 2787.705 → "2,788", 0.01061 → "0.0106"
 String formatVolume(double value) {
+  final abs = value.abs();
   return NumberFormat.decimalPatternDigits(
     locale: 'ko_KR',
-    decimalDigits: value.abs() >= 1000 ? 0 : 3,
+    decimalDigits: abs >= 1000
+        ? 0
+        : abs >= 1
+        ? 3
+        : 4,
   ).format(value);
 }

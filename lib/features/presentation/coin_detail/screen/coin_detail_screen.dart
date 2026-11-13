@@ -11,6 +11,8 @@ import 'package:coin_dashboard/features/presentation/coin_detail/widget/candle_c
 import 'package:coin_dashboard/features/presentation/coin_detail/widget/day_stats_card.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/widget/detail_breadcrumb.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/widget/detail_header.dart';
+import 'package:coin_dashboard/features/presentation/coin_detail/widget/orderbook_card.dart';
+import 'package:coin_dashboard/features/presentation/coin_detail/widget/trades_card.dart';
 import 'package:coin_dashboard/features/presentation/home/controller/home_controller.dart';
 
 /// 코인 상세 화면. [symbol] 은 URL 의 :symbol (대문자).
@@ -132,9 +134,14 @@ class _DetailBody extends StatelessWidget {
               ? 32.0
               : 16.0;
 
-          // 4단계에서 체결 카드가 붙는다.
-          final main = <Widget>[CandleChartCard(tag: symbol)];
-          final side = <Widget>[DayStatsCard(detail: detail)];
+          final main = <Widget>[
+            CandleChartCard(tag: symbol),
+            TradesCard(tag: symbol),
+          ];
+          final side = <Widget>[
+            DayStatsCard(detail: detail),
+            OrderbookCard(tag: symbol),
+          ];
 
           return SingleChildScrollView(
             padding: EdgeInsets.fromLTRB(gutter, 20, gutter, 40),

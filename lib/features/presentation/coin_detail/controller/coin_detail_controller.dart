@@ -6,8 +6,12 @@ import 'package:coin_dashboard/common/error/result.dart';
 import 'package:coin_dashboard/common/services/favorites_service.dart';
 import 'package:coin_dashboard/features/domain/entities/candle.dart';
 import 'package:coin_dashboard/features/domain/entities/coin_detail.dart';
+import 'package:coin_dashboard/features/domain/entities/orderbook.dart';
+import 'package:coin_dashboard/features/domain/entities/trade.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_candles.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_coin_detail.dart';
+import 'package:coin_dashboard/features/domain/usecases/get_orderbook.dart';
+import 'package:coin_dashboard/features/domain/usecases/get_trades.dart';
 
 /// 차트 종류.
 enum ChartMode {
@@ -37,12 +41,16 @@ class CoinDetailController extends GetxController {
   final String symbol; // 예: 'BTC'
   final GetCoinDetail getCoinDetail;
   final GetCandles getCandles;
+  final GetOrderbook getOrderbook;
+  final GetTrades getTrades;
   final FavoritesService favoritesService;
 
   CoinDetailController(
     this.symbol,
     this.getCoinDetail,
     this.getCandles,
+    this.getOrderbook,
+    this.getTrades,
     this.favoritesService,
   );
 
@@ -58,6 +66,14 @@ class CoinDetailController extends GetxController {
   final Rx<ChartMode> mode = ChartMode.candle.obs;
   final RxBool chartLoading = false.obs;
   final RxnString chartError = RxnString();
+
+  final Rxn<Orderbook> orderbook = Rxn<Orderbook>();
+
+  /// 최신 체결이 앞에.
+  final RxList<Trade> trades = <Trade>[].obs;
+
+  /// 호가·체결 중 하나라도 실패하면 메시지가 남는다.
+  final RxnString depthError = RxnString();
 
   Timer? _timer;
   Timer? _candleTimer;
@@ -84,20 +100,41 @@ class CoinDetailController extends GetxController {
     super.onClose();
   }
 
-  /// 시세 조회. 실패해도 마지막으로 받은 시세는 남겨 둔다.
+  /// 시세·호가·체결을 함께 조회한다. 실패해도 마지막으로 받은 값은 남겨 둔다.
   Future<void> fetch() async {
     if (_fetching) return;
     _fetching = true;
 
-    final result = await getCoinDetail(market);
+    final tickerFuture = getCoinDetail(market);
+    final bookFuture = getOrderbook(market);
+    final tradesFuture = getTrades(market);
+    final ticker = await tickerFuture;
+    final book = await bookFuture;
+    final recent = await tradesFuture;
 
-    switch (result) {
+    switch (ticker) {
       case Ok(value: final value):
         detail.value = value;
         error.value = null;
       case Err(message: final m):
         error.value = m;
     }
+
+    String? depthMessage;
+    switch (book) {
+      case Ok(value: final value):
+        orderbook.value = value;
+      case Err(message: final m):
+        depthMessage = m;
+    }
+    switch (recent) {
+      case Ok(value: final value):
+        trades.assignAll(value);
+      case Err(message: final m):
+        depthMessage ??= m;
+    }
+    depthError.value = depthMessage;
+
     _fetching = false;
   }
 

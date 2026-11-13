@@ -5,6 +5,8 @@ import 'package:coin_dashboard/features/domain/repositories/coin_repository.dart
 import 'package:coin_dashboard/features/domain/usecases/get_candles.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_coin_detail.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_krw_tickers.dart';
+import 'package:coin_dashboard/features/domain/usecases/get_orderbook.dart';
+import 'package:coin_dashboard/features/domain/usecases/get_trades.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,6 +25,8 @@ class AppBinding extends Bindings {
     Get.lazyPut<GetKrwTickers>(() => GetKrwTickers(Get.find<CoinRepository>()));
     Get.lazyPut<GetCandles>(() => GetCandles(Get.find<CoinRepository>()));
     Get.lazyPut<GetCoinDetail>(() => GetCoinDetail(Get.find<CoinRepository>()));
+    Get.lazyPut<GetOrderbook>(() => GetOrderbook(Get.find<CoinRepository>()));
+    Get.lazyPut<GetTrades>(() => GetTrades(Get.find<CoinRepository>()));
     Get.lazyPut<FavoritesService>(() => FavoritesService());
   }
 }

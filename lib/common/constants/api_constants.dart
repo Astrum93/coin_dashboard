@@ -13,6 +13,14 @@ class ApiConstants {
   /// 전체 마켓 목록 (한글명 포함).
   static const String marketAll = '$base/market/all?isDetails=false';
 
+  /// 호가. levels 는 단계 수 (최대 30).
+  static String orderbook(String market, int levels) =>
+      '$base/orderbook?markets=$market&count=$levels';
+
+  /// 최근 체결. 최신이 앞에 온다.
+  static String trades(String market, int count) =>
+      '$base/trades/ticks?market=$market&count=$count';
+
   /// 캔들 한 번에 받을 수 있는 최대 개수.
   static const int candleMaxCount = 200;
 

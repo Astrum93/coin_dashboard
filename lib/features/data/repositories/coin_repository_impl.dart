@@ -7,6 +7,8 @@ import 'package:coin_dashboard/features/data/models/candle_model.dart';
 import 'package:coin_dashboard/features/domain/entities/candle.dart';
 import 'package:coin_dashboard/features/domain/entities/coin_detail.dart';
 import 'package:coin_dashboard/features/domain/entities/market_ticker.dart';
+import 'package:coin_dashboard/features/domain/entities/orderbook.dart';
+import 'package:coin_dashboard/features/domain/entities/trade.dart';
 import 'package:coin_dashboard/features/domain/repositories/coin_repository.dart';
 
 /// CoinRepository 구현. DTO → 엔티티 변환, 예외 → Err 변환.
@@ -16,12 +18,24 @@ class CoinRepositoryImpl implements CoinRepository {
   CoinRepositoryImpl(this.remote);
 
   /// 마켓 한글명 캐시. 목록은 자주 바뀌지 않아 처음 한 번만 받는다.
-  Map<String, String>? _names;
+  Future<Map<String, String>>? _names;
+
+  /// 동시에 불려도 한 번만 요청하고, 실패하면 다음에 다시 받는다.
+  Future<Map<String, String>> _marketNames() async {
+    try {
+      return await (_names ??= remote.fetchMarketNames());
+    } catch (_) {
+      _names = null;
+      rethrow;
+    }
+  }
+
+  static String _unknown(String market) => '업비트에 없는 마켓입니다: $market';
 
   @override
   Future<Result<List<MarketTicker>>> getKrwTickers() async {
     try {
-      final names = _names ??= await remote.fetchMarketNames();
+      final names = await _marketNames();
       final models = await remote.fetchKrwTickers();
       return Ok([
         for (final m in models)
@@ -35,13 +49,44 @@ class CoinRepositoryImpl implements CoinRepository {
   @override
   Future<Result<CoinDetail>> getCoinDetail(String market) async {
     try {
-      final names = _names ??= await remote.fetchMarketNames();
-      final name = names[market];
-      if (name == null) return Err('업비트에 없는 마켓입니다: $market');
+      final name = (await _marketNames())[market];
+      if (name == null) return Err(_unknown(market));
       final model = await remote.fetchTicker(market);
       return Ok(model.toEntity(koreanName: name));
     } catch (e) {
       return Err('시세 불러오기 실패: $e');
+    }
+  }
+
+  @override
+  Future<Result<Orderbook>> getOrderbook(
+    String market, {
+    required int levels,
+  }) async {
+    try {
+      if (!(await _marketNames()).containsKey(market)) {
+        return Err(_unknown(market));
+      }
+      final model = await remote.fetchOrderbook(market, levels);
+      return Ok(model.toEntity());
+    } catch (e) {
+      return Err('호가 불러오기 실패: $e');
+    }
+  }
+
+  @override
+  Future<Result<List<Trade>>> getTrades(
+    String market, {
+    required int count,
+  }) async {
+    try {
+      if (!(await _marketNames()).containsKey(market)) {
+        return Err(_unknown(market));
+      }
+      final models = await remote.fetchTrades(market, count);
+      return Ok(models.map((m) => m.toEntity()).toList());
+    } catch (e) {
+      return Err('체결 불러오기 실패: $e');
     }
   }
 

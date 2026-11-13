@@ -6,6 +6,8 @@ import 'package:coin_dashboard/common/constants/api_constants.dart';
 import 'package:coin_dashboard/features/data/models/candle_model.dart';
 import 'package:coin_dashboard/features/data/models/coin_detail_model.dart';
 import 'package:coin_dashboard/features/data/models/market_ticker_model.dart';
+import 'package:coin_dashboard/features/data/models/orderbook_model.dart';
+import 'package:coin_dashboard/features/data/models/trade_model.dart';
 import 'package:coin_dashboard/features/domain/entities/candle.dart';
 
 /// 원격 API 데이터 소스.
@@ -17,6 +19,11 @@ abstract class CoinRemoteDataSource {
 
   /// [market] 예: 'KRW-BTC'
   Future<CoinDetailModel> fetchTicker(String market);
+
+  Future<OrderbookModel> fetchOrderbook(String market, int levels);
+
+  /// 최신 체결이 앞에 온다.
+  Future<List<TradeModel>> fetchTrades(String market, int count);
 
   /// 응답 그대로 최신 캔들이 앞에 온다. count 는 최대 200, [to] 이전 캔들만.
   Future<List<CandleModel>> fetchCandles({
@@ -56,6 +63,19 @@ class CoinRemoteDataSourceImpl implements CoinRemoteDataSource {
     final list = await _getList(ApiConstants.ticker(market));
     if (list.isEmpty) throw Exception('시세 없음: $market');
     return CoinDetailModel.fromJson(list.first as Map<String, dynamic>);
+  }
+
+  @override
+  Future<OrderbookModel> fetchOrderbook(String market, int levels) async {
+    final list = await _getList(ApiConstants.orderbook(market, levels));
+    if (list.isEmpty) throw Exception('호가 없음: $market');
+    return OrderbookModel.fromJson(list.first as Map<String, dynamic>);
+  }
+
+  @override
+  Future<List<TradeModel>> fetchTrades(String market, int count) async {
+    final list = await _getList(ApiConstants.trades(market, count));
+    return list.cast<Map<String, dynamic>>().map(TradeModel.fromJson).toList();
   }
 
   @override
