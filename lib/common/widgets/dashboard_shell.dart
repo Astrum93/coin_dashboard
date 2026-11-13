@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:coin_dashboard/app/theme/app_breakpoints.dart';
 import 'package:coin_dashboard/app/theme/app_colors.dart';
 import 'package:coin_dashboard/app/theme/app_text_styles.dart';
 
@@ -18,7 +19,7 @@ class ShellNavItem {
   final bool selected;
 }
 
-/// 사이드바 + 본문 레이아웃. 좁은 화면(900 미만)에선 메뉴가 위로 올라간다.
+/// 사이드바 + 본문 레이아웃. 좁은 화면(AppBreakpoints.sidebar 미만)에선 메뉴가 위로 올라간다.
 class DashboardShell extends StatelessWidget {
   const DashboardShell({
     super.key,
@@ -33,14 +34,12 @@ class DashboardShell extends StatelessWidget {
   /// 업비트 API 연결 상태 표시.
   final bool connected;
 
-  static const double wideBreakpoint = 900;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
-          final wide = constraints.maxWidth >= wideBreakpoint;
+          final wide = constraints.maxWidth >= AppBreakpoints.sidebar;
           final sidebar = _Sidebar(
             navItems: navItems,
             connected: connected,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:coin_dashboard/app/theme/app_breakpoints.dart';
 import 'package:coin_dashboard/app/theme/app_text_styles.dart';
 import 'package:coin_dashboard/common/widgets/dashboard_shell.dart';
 import 'package:coin_dashboard/features/presentation/home/controller/home_controller.dart';
@@ -89,8 +90,10 @@ class _HomeBody extends StatelessWidget {
 
       return LayoutBuilder(
         builder: (context, constraints) {
-          final wide = constraints.maxWidth >= 1000;
-          final gutter = constraints.maxWidth >= 600 ? 32.0 : 16.0;
+          final wide = constraints.maxWidth >= AppBreakpoints.desktop;
+          final gutter = constraints.maxWidth >= AppBreakpoints.tablet
+              ? 32.0
+              : 16.0;
 
           return SingleChildScrollView(
             controller: controller.scrollController,

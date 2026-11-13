@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import 'package:coin_dashboard/app/theme/app_breakpoints.dart';
 import 'package:coin_dashboard/app/theme/app_colors.dart';
 import 'package:coin_dashboard/app/theme/app_text_styles.dart';
 import 'package:coin_dashboard/common/utils/formatter.dart';
@@ -130,7 +131,9 @@ class _Chart extends StatelessWidget {
       ChartPeriod.year => 'yy.MM',
     };
     // 폰 너비에선 라벨이 겹치지 않게 3개만.
-    final count = MediaQuery.sizeOf(context).width < 600 ? 3 : 5;
+    final count = MediaQuery.sizeOf(context).width < AppBreakpoints.tablet
+        ? 3
+        : 5;
     final step = (candles.length - 1) / (count - 1);
     final xLabels = [
       for (var i = 0; i < count; i++)

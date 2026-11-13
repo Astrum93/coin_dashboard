@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:coin_dashboard/app/theme/app_breakpoints.dart';
 import 'package:coin_dashboard/app/theme/app_colors.dart';
 import 'package:coin_dashboard/app/theme/app_text_styles.dart';
 import 'package:coin_dashboard/common/utils/formatter.dart';
@@ -20,9 +21,9 @@ class MarketSummary extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final columns = constraints.maxWidth >= 1000
+        final columns = constraints.maxWidth >= AppBreakpoints.desktop
             ? 4
-            : constraints.maxWidth >= 520
+            : constraints.maxWidth >= AppBreakpoints.compact
             ? 2
             : 1;
         final width = (constraints.maxWidth - _gap * (columns - 1)) / columns;
