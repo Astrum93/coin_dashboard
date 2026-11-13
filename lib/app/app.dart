@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:coin_dashboard/app/binding/app_binding.dart';
 import 'package:coin_dashboard/app/router/app_router.dart';
+import 'package:coin_dashboard/app/theme/app_theme.dart';
 
 /// 앱 루트 위젯. 테마·공용 의존성·라우팅 설정.
 class MyApp extends StatelessWidget {
@@ -12,9 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp.router(
       title: '코인 대시보드',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme: AppTheme.dark,
       debugShowCheckedModeBanner: false,
       initialBinding: AppBinding(),
       routerDelegate: appRouter.routerDelegate,

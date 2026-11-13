@@ -4,17 +4,30 @@
 
 이 앱이 만들어지는 과정을 날짜순으로 기록합니다. 최신 항목이 위에 있습니다.
 
-## 2026-10-21 · 🚩 업비트 API 전환과 화면 단위 구조 재편
+## 2026-11-13 · 🚩 Android·iOS 플랫폼 추가
 
-시세 출처를 CoinGecko에서 업비트 공개 API로 바꾸고, 화면이 늘어날 것에 대비해 바인딩과 폴더를 화면 단위로 나눴다.
+휴대폰에서도 보려고 웹뷰 래퍼 대신 같은 코드를 네이티브로 빌드하도록 모바일 플랫폼을 추가하고, 흩어진 화면 폭 기준값을 한 곳으로 모았다.
 
-- 업비트 `/v1/ticker`(`KRW-BTC`)로 교체. data 레이어(상수·데이터 소스·DTO)만 수정
-- 공용 의존성은 `AppBinding`, 홈 전용 의존성은 `GoRoute` builder에서 `HomeBinding`으로 분리
-- `presentation/<화면>/{binding, controller, screen, widget}` 구조로 재배치, 라우터는 `app/router/`로 이동
-- `MyApp`을 `app/app.dart`로 분리, 상세는 중첩 라우트(`coin/:symbol`)로 준비(현재 비활성)
-- 주석을 역할 한 줄 기준으로 정리, `CLAUDE.md` 코드 규칙 추가
+- `flutter create --platforms=android,ios`로 플랫폼 추가, 패키지·번들 ID `com.spacena.*`, 앱 이름 "코인 대시보드"
+- Android release 매니페스트에 `INTERNET` 권한 추가
+- `AppBreakpoints`(520/600/900/1000) 추가, 홈·셸·요약 카드·차트의 하드코딩 값 교체
+- 테마 상수(`AppColors`, `AppTextStyles`, `AppBreakpoints` 등)명을 대문자 스네이크 케이스로 변경
+- 단일 BTC 시세 경로(`GetCoinPrice`, `Coin`, `CoinModel`) 등 쓰지 않는 코드 삭제
 
-`#리팩토링` `#GetX` `#go_router`  ·  커밋: bd4d6d7
+`#설정` `#리팩토링` `#Flutter`  ·  커밋: 941783a, a17c349, e74894f, dd196fc
+
+## 2026-10-21 · 🚩 업비트 전환, 구조 재편, 디자인 가이드 적용
+
+시세 출처를 업비트로 바꾸고 화면 단위 구조로 재편한 뒤, 드리블 레퍼런스로 정한 다크 테마 디자인 가이드를 공용 위젯으로 만들어 홈을 대시보드로 다시 짰다.
+
+- 업비트 API 전환, 공용 `AppBinding`과 화면별 바인딩 분리, `presentation/<화면>/…` 구조로 재배치
+- 색·글자 토큰과 다크 테마, IBM Plex Sans KR·Mono 폰트(OFL) 번들과 라이선스 화면 등록
+- 공용 위젯 9종 (`AppCard`, `StatTile`, `ChangeBadge`, `SegmentedPills`, `DashboardShell` 등)
+- 원화 마켓 전체 시세(`ticker/all`)와 캔들 데이터 레이어 추가
+- 홈: 시장 요약, BTC 차트, 등락률 순위, 마켓 표, 10초 자동 갱신, 사이드바 활성 표시
+- 파비콘·PWA·윈도우 아이콘을 대시보드 로고로 교체
+
+`#UI` `#기능` `#GetX`  ·  커밋: bd4d6d7, d30fd76, c18f203, 7edbc8b, 58bd105
 
 ## 2026-09-11 · 업비트 전환 준비: SDK 고정과 패키지 추가
 
