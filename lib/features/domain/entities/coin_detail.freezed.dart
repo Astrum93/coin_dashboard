@@ -17,6 +17,7 @@ mixin _$CoinDetail {
  String get market;// 예: 'KRW-BTC'
  String get symbol;// 예: 'BTC'
  String get koreanName;// 예: '비트코인'
+ String get englishName;// 예: 'Bitcoin'
  double get price; double get changeRate;// 전일 대비 퍼센트. 1.82 = 1.82%
  double get changePrice;// 전일 대비 금액 (부호 포함)
  double get prevClosingPrice; double get openingPrice; double get highPrice; double get lowPrice; double get tradeVolume24h;// 24시간 누적 거래량(코인 개수)
@@ -32,16 +33,16 @@ $CoinDetailCopyWith<CoinDetail> get copyWith => _$CoinDetailCopyWithImpl<CoinDet
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinDetail&&(identical(other.market, market) || other.market == market)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.koreanName, koreanName) || other.koreanName == koreanName)&&(identical(other.price, price) || other.price == price)&&(identical(other.changeRate, changeRate) || other.changeRate == changeRate)&&(identical(other.changePrice, changePrice) || other.changePrice == changePrice)&&(identical(other.prevClosingPrice, prevClosingPrice) || other.prevClosingPrice == prevClosingPrice)&&(identical(other.openingPrice, openingPrice) || other.openingPrice == openingPrice)&&(identical(other.highPrice, highPrice) || other.highPrice == highPrice)&&(identical(other.lowPrice, lowPrice) || other.lowPrice == lowPrice)&&(identical(other.tradeVolume24h, tradeVolume24h) || other.tradeVolume24h == tradeVolume24h)&&(identical(other.tradePrice24h, tradePrice24h) || other.tradePrice24h == tradePrice24h)&&(identical(other.highest52WeekPrice, highest52WeekPrice) || other.highest52WeekPrice == highest52WeekPrice)&&(identical(other.lowest52WeekPrice, lowest52WeekPrice) || other.lowest52WeekPrice == lowest52WeekPrice));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinDetail&&(identical(other.market, market) || other.market == market)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.koreanName, koreanName) || other.koreanName == koreanName)&&(identical(other.englishName, englishName) || other.englishName == englishName)&&(identical(other.price, price) || other.price == price)&&(identical(other.changeRate, changeRate) || other.changeRate == changeRate)&&(identical(other.changePrice, changePrice) || other.changePrice == changePrice)&&(identical(other.prevClosingPrice, prevClosingPrice) || other.prevClosingPrice == prevClosingPrice)&&(identical(other.openingPrice, openingPrice) || other.openingPrice == openingPrice)&&(identical(other.highPrice, highPrice) || other.highPrice == highPrice)&&(identical(other.lowPrice, lowPrice) || other.lowPrice == lowPrice)&&(identical(other.tradeVolume24h, tradeVolume24h) || other.tradeVolume24h == tradeVolume24h)&&(identical(other.tradePrice24h, tradePrice24h) || other.tradePrice24h == tradePrice24h)&&(identical(other.highest52WeekPrice, highest52WeekPrice) || other.highest52WeekPrice == highest52WeekPrice)&&(identical(other.lowest52WeekPrice, lowest52WeekPrice) || other.lowest52WeekPrice == lowest52WeekPrice));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,market,symbol,koreanName,price,changeRate,changePrice,prevClosingPrice,openingPrice,highPrice,lowPrice,tradeVolume24h,tradePrice24h,highest52WeekPrice,lowest52WeekPrice);
+int get hashCode => Object.hash(runtimeType,market,symbol,koreanName,englishName,price,changeRate,changePrice,prevClosingPrice,openingPrice,highPrice,lowPrice,tradeVolume24h,tradePrice24h,highest52WeekPrice,lowest52WeekPrice);
 
 @override
 String toString() {
-  return 'CoinDetail(market: $market, symbol: $symbol, koreanName: $koreanName, price: $price, changeRate: $changeRate, changePrice: $changePrice, prevClosingPrice: $prevClosingPrice, openingPrice: $openingPrice, highPrice: $highPrice, lowPrice: $lowPrice, tradeVolume24h: $tradeVolume24h, tradePrice24h: $tradePrice24h, highest52WeekPrice: $highest52WeekPrice, lowest52WeekPrice: $lowest52WeekPrice)';
+  return 'CoinDetail(market: $market, symbol: $symbol, koreanName: $koreanName, englishName: $englishName, price: $price, changeRate: $changeRate, changePrice: $changePrice, prevClosingPrice: $prevClosingPrice, openingPrice: $openingPrice, highPrice: $highPrice, lowPrice: $lowPrice, tradeVolume24h: $tradeVolume24h, tradePrice24h: $tradePrice24h, highest52WeekPrice: $highest52WeekPrice, lowest52WeekPrice: $lowest52WeekPrice)';
 }
 
 
@@ -52,7 +53,7 @@ abstract mixin class $CoinDetailCopyWith<$Res>  {
   factory $CoinDetailCopyWith(CoinDetail value, $Res Function(CoinDetail) _then) = _$CoinDetailCopyWithImpl;
 @useResult
 $Res call({
- String market, String symbol, String koreanName, double price, double changeRate, double changePrice, double prevClosingPrice, double openingPrice, double highPrice, double lowPrice, double tradeVolume24h, double tradePrice24h, double highest52WeekPrice, double lowest52WeekPrice
+ String market, String symbol, String koreanName, String englishName, double price, double changeRate, double changePrice, double prevClosingPrice, double openingPrice, double highPrice, double lowPrice, double tradeVolume24h, double tradePrice24h, double highest52WeekPrice, double lowest52WeekPrice
 });
 
 
@@ -69,11 +70,12 @@ class _$CoinDetailCopyWithImpl<$Res>
 
 /// Create a copy of CoinDetail
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? market = null,Object? symbol = null,Object? koreanName = null,Object? price = null,Object? changeRate = null,Object? changePrice = null,Object? prevClosingPrice = null,Object? openingPrice = null,Object? highPrice = null,Object? lowPrice = null,Object? tradeVolume24h = null,Object? tradePrice24h = null,Object? highest52WeekPrice = null,Object? lowest52WeekPrice = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? market = null,Object? symbol = null,Object? koreanName = null,Object? englishName = null,Object? price = null,Object? changeRate = null,Object? changePrice = null,Object? prevClosingPrice = null,Object? openingPrice = null,Object? highPrice = null,Object? lowPrice = null,Object? tradeVolume24h = null,Object? tradePrice24h = null,Object? highest52WeekPrice = null,Object? lowest52WeekPrice = null,}) {
   return _then(_self.copyWith(
 market: null == market ? _self.market : market // ignore: cast_nullable_to_non_nullable
 as String,symbol: null == symbol ? _self.symbol : symbol // ignore: cast_nullable_to_non_nullable
 as String,koreanName: null == koreanName ? _self.koreanName : koreanName // ignore: cast_nullable_to_non_nullable
+as String,englishName: null == englishName ? _self.englishName : englishName // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as double,changeRate: null == changeRate ? _self.changeRate : changeRate // ignore: cast_nullable_to_non_nullable
 as double,changePrice: null == changePrice ? _self.changePrice : changePrice // ignore: cast_nullable_to_non_nullable
@@ -170,10 +172,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String market,  String symbol,  String koreanName,  double price,  double changeRate,  double changePrice,  double prevClosingPrice,  double openingPrice,  double highPrice,  double lowPrice,  double tradeVolume24h,  double tradePrice24h,  double highest52WeekPrice,  double lowest52WeekPrice)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String market,  String symbol,  String koreanName,  String englishName,  double price,  double changeRate,  double changePrice,  double prevClosingPrice,  double openingPrice,  double highPrice,  double lowPrice,  double tradeVolume24h,  double tradePrice24h,  double highest52WeekPrice,  double lowest52WeekPrice)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CoinDetail() when $default != null:
-return $default(_that.market,_that.symbol,_that.koreanName,_that.price,_that.changeRate,_that.changePrice,_that.prevClosingPrice,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradeVolume24h,_that.tradePrice24h,_that.highest52WeekPrice,_that.lowest52WeekPrice);case _:
+return $default(_that.market,_that.symbol,_that.koreanName,_that.englishName,_that.price,_that.changeRate,_that.changePrice,_that.prevClosingPrice,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradeVolume24h,_that.tradePrice24h,_that.highest52WeekPrice,_that.lowest52WeekPrice);case _:
   return orElse();
 
 }
@@ -191,10 +193,10 @@ return $default(_that.market,_that.symbol,_that.koreanName,_that.price,_that.cha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String market,  String symbol,  String koreanName,  double price,  double changeRate,  double changePrice,  double prevClosingPrice,  double openingPrice,  double highPrice,  double lowPrice,  double tradeVolume24h,  double tradePrice24h,  double highest52WeekPrice,  double lowest52WeekPrice)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String market,  String symbol,  String koreanName,  String englishName,  double price,  double changeRate,  double changePrice,  double prevClosingPrice,  double openingPrice,  double highPrice,  double lowPrice,  double tradeVolume24h,  double tradePrice24h,  double highest52WeekPrice,  double lowest52WeekPrice)  $default,) {final _that = this;
 switch (_that) {
 case _CoinDetail():
-return $default(_that.market,_that.symbol,_that.koreanName,_that.price,_that.changeRate,_that.changePrice,_that.prevClosingPrice,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradeVolume24h,_that.tradePrice24h,_that.highest52WeekPrice,_that.lowest52WeekPrice);case _:
+return $default(_that.market,_that.symbol,_that.koreanName,_that.englishName,_that.price,_that.changeRate,_that.changePrice,_that.prevClosingPrice,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradeVolume24h,_that.tradePrice24h,_that.highest52WeekPrice,_that.lowest52WeekPrice);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -211,10 +213,10 @@ return $default(_that.market,_that.symbol,_that.koreanName,_that.price,_that.cha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String market,  String symbol,  String koreanName,  double price,  double changeRate,  double changePrice,  double prevClosingPrice,  double openingPrice,  double highPrice,  double lowPrice,  double tradeVolume24h,  double tradePrice24h,  double highest52WeekPrice,  double lowest52WeekPrice)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String market,  String symbol,  String koreanName,  String englishName,  double price,  double changeRate,  double changePrice,  double prevClosingPrice,  double openingPrice,  double highPrice,  double lowPrice,  double tradeVolume24h,  double tradePrice24h,  double highest52WeekPrice,  double lowest52WeekPrice)?  $default,) {final _that = this;
 switch (_that) {
 case _CoinDetail() when $default != null:
-return $default(_that.market,_that.symbol,_that.koreanName,_that.price,_that.changeRate,_that.changePrice,_that.prevClosingPrice,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradeVolume24h,_that.tradePrice24h,_that.highest52WeekPrice,_that.lowest52WeekPrice);case _:
+return $default(_that.market,_that.symbol,_that.koreanName,_that.englishName,_that.price,_that.changeRate,_that.changePrice,_that.prevClosingPrice,_that.openingPrice,_that.highPrice,_that.lowPrice,_that.tradeVolume24h,_that.tradePrice24h,_that.highest52WeekPrice,_that.lowest52WeekPrice);case _:
   return null;
 
 }
@@ -226,7 +228,7 @@ return $default(_that.market,_that.symbol,_that.koreanName,_that.price,_that.cha
 
 
 class _CoinDetail implements CoinDetail {
-  const _CoinDetail({required this.market, required this.symbol, required this.koreanName, required this.price, required this.changeRate, required this.changePrice, required this.prevClosingPrice, required this.openingPrice, required this.highPrice, required this.lowPrice, required this.tradeVolume24h, required this.tradePrice24h, required this.highest52WeekPrice, required this.lowest52WeekPrice});
+  const _CoinDetail({required this.market, required this.symbol, required this.koreanName, required this.englishName, required this.price, required this.changeRate, required this.changePrice, required this.prevClosingPrice, required this.openingPrice, required this.highPrice, required this.lowPrice, required this.tradeVolume24h, required this.tradePrice24h, required this.highest52WeekPrice, required this.lowest52WeekPrice});
   
 
 @override final  String market;
@@ -235,6 +237,8 @@ class _CoinDetail implements CoinDetail {
 // 예: 'BTC'
 @override final  String koreanName;
 // 예: '비트코인'
+@override final  String englishName;
+// 예: 'Bitcoin'
 @override final  double price;
 @override final  double changeRate;
 // 전일 대비 퍼센트. 1.82 = 1.82%
@@ -261,16 +265,16 @@ _$CoinDetailCopyWith<_CoinDetail> get copyWith => __$CoinDetailCopyWithImpl<_Coi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CoinDetail&&(identical(other.market, market) || other.market == market)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.koreanName, koreanName) || other.koreanName == koreanName)&&(identical(other.price, price) || other.price == price)&&(identical(other.changeRate, changeRate) || other.changeRate == changeRate)&&(identical(other.changePrice, changePrice) || other.changePrice == changePrice)&&(identical(other.prevClosingPrice, prevClosingPrice) || other.prevClosingPrice == prevClosingPrice)&&(identical(other.openingPrice, openingPrice) || other.openingPrice == openingPrice)&&(identical(other.highPrice, highPrice) || other.highPrice == highPrice)&&(identical(other.lowPrice, lowPrice) || other.lowPrice == lowPrice)&&(identical(other.tradeVolume24h, tradeVolume24h) || other.tradeVolume24h == tradeVolume24h)&&(identical(other.tradePrice24h, tradePrice24h) || other.tradePrice24h == tradePrice24h)&&(identical(other.highest52WeekPrice, highest52WeekPrice) || other.highest52WeekPrice == highest52WeekPrice)&&(identical(other.lowest52WeekPrice, lowest52WeekPrice) || other.lowest52WeekPrice == lowest52WeekPrice));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CoinDetail&&(identical(other.market, market) || other.market == market)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.koreanName, koreanName) || other.koreanName == koreanName)&&(identical(other.englishName, englishName) || other.englishName == englishName)&&(identical(other.price, price) || other.price == price)&&(identical(other.changeRate, changeRate) || other.changeRate == changeRate)&&(identical(other.changePrice, changePrice) || other.changePrice == changePrice)&&(identical(other.prevClosingPrice, prevClosingPrice) || other.prevClosingPrice == prevClosingPrice)&&(identical(other.openingPrice, openingPrice) || other.openingPrice == openingPrice)&&(identical(other.highPrice, highPrice) || other.highPrice == highPrice)&&(identical(other.lowPrice, lowPrice) || other.lowPrice == lowPrice)&&(identical(other.tradeVolume24h, tradeVolume24h) || other.tradeVolume24h == tradeVolume24h)&&(identical(other.tradePrice24h, tradePrice24h) || other.tradePrice24h == tradePrice24h)&&(identical(other.highest52WeekPrice, highest52WeekPrice) || other.highest52WeekPrice == highest52WeekPrice)&&(identical(other.lowest52WeekPrice, lowest52WeekPrice) || other.lowest52WeekPrice == lowest52WeekPrice));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,market,symbol,koreanName,price,changeRate,changePrice,prevClosingPrice,openingPrice,highPrice,lowPrice,tradeVolume24h,tradePrice24h,highest52WeekPrice,lowest52WeekPrice);
+int get hashCode => Object.hash(runtimeType,market,symbol,koreanName,englishName,price,changeRate,changePrice,prevClosingPrice,openingPrice,highPrice,lowPrice,tradeVolume24h,tradePrice24h,highest52WeekPrice,lowest52WeekPrice);
 
 @override
 String toString() {
-  return 'CoinDetail(market: $market, symbol: $symbol, koreanName: $koreanName, price: $price, changeRate: $changeRate, changePrice: $changePrice, prevClosingPrice: $prevClosingPrice, openingPrice: $openingPrice, highPrice: $highPrice, lowPrice: $lowPrice, tradeVolume24h: $tradeVolume24h, tradePrice24h: $tradePrice24h, highest52WeekPrice: $highest52WeekPrice, lowest52WeekPrice: $lowest52WeekPrice)';
+  return 'CoinDetail(market: $market, symbol: $symbol, koreanName: $koreanName, englishName: $englishName, price: $price, changeRate: $changeRate, changePrice: $changePrice, prevClosingPrice: $prevClosingPrice, openingPrice: $openingPrice, highPrice: $highPrice, lowPrice: $lowPrice, tradeVolume24h: $tradeVolume24h, tradePrice24h: $tradePrice24h, highest52WeekPrice: $highest52WeekPrice, lowest52WeekPrice: $lowest52WeekPrice)';
 }
 
 
@@ -281,7 +285,7 @@ abstract mixin class _$CoinDetailCopyWith<$Res> implements $CoinDetailCopyWith<$
   factory _$CoinDetailCopyWith(_CoinDetail value, $Res Function(_CoinDetail) _then) = __$CoinDetailCopyWithImpl;
 @override @useResult
 $Res call({
- String market, String symbol, String koreanName, double price, double changeRate, double changePrice, double prevClosingPrice, double openingPrice, double highPrice, double lowPrice, double tradeVolume24h, double tradePrice24h, double highest52WeekPrice, double lowest52WeekPrice
+ String market, String symbol, String koreanName, String englishName, double price, double changeRate, double changePrice, double prevClosingPrice, double openingPrice, double highPrice, double lowPrice, double tradeVolume24h, double tradePrice24h, double highest52WeekPrice, double lowest52WeekPrice
 });
 
 
@@ -298,11 +302,12 @@ class __$CoinDetailCopyWithImpl<$Res>
 
 /// Create a copy of CoinDetail
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? market = null,Object? symbol = null,Object? koreanName = null,Object? price = null,Object? changeRate = null,Object? changePrice = null,Object? prevClosingPrice = null,Object? openingPrice = null,Object? highPrice = null,Object? lowPrice = null,Object? tradeVolume24h = null,Object? tradePrice24h = null,Object? highest52WeekPrice = null,Object? lowest52WeekPrice = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? market = null,Object? symbol = null,Object? koreanName = null,Object? englishName = null,Object? price = null,Object? changeRate = null,Object? changePrice = null,Object? prevClosingPrice = null,Object? openingPrice = null,Object? highPrice = null,Object? lowPrice = null,Object? tradeVolume24h = null,Object? tradePrice24h = null,Object? highest52WeekPrice = null,Object? lowest52WeekPrice = null,}) {
   return _then(_CoinDetail(
 market: null == market ? _self.market : market // ignore: cast_nullable_to_non_nullable
 as String,symbol: null == symbol ? _self.symbol : symbol // ignore: cast_nullable_to_non_nullable
 as String,koreanName: null == koreanName ? _self.koreanName : koreanName // ignore: cast_nullable_to_non_nullable
+as String,englishName: null == englishName ? _self.englishName : englishName // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as double,changeRate: null == changeRate ? _self.changeRate : changeRate // ignore: cast_nullable_to_non_nullable
 as double,changePrice: null == changePrice ? _self.changePrice : changePrice // ignore: cast_nullable_to_non_nullable

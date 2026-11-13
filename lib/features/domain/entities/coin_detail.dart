@@ -9,6 +9,7 @@ abstract class CoinDetail with _$CoinDetail {
     required String market, // 예: 'KRW-BTC'
     required String symbol, // 예: 'BTC'
     required String koreanName, // 예: '비트코인'
+    required String englishName, // 예: 'Bitcoin'
     required double price,
     required double changeRate, // 전일 대비 퍼센트. 1.82 = 1.82%
     required double changePrice, // 전일 대비 금액 (부호 포함)

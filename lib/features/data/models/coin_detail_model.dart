@@ -43,11 +43,15 @@ abstract class CoinDetailModel with _$CoinDetailModel {
     );
   }
 
-  /// DTO → 엔티티. 한글명은 마켓 목록에서 따로 받아 넣는다.
-  CoinDetail toEntity({required String koreanName}) => CoinDetail(
+  /// DTO → 엔티티. 이름은 마켓 목록에서 따로 받아 넣는다.
+  CoinDetail toEntity({
+    required String koreanName,
+    required String englishName,
+  }) => CoinDetail(
     market: market,
     symbol: market.split('-').last,
     koreanName: koreanName,
+    englishName: englishName,
     price: tradePrice,
     changeRate: signedChangeRate * 100,
     changePrice: signedChangePrice,

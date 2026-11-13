@@ -10,10 +10,13 @@ import 'package:coin_dashboard/features/data/models/orderbook_model.dart';
 import 'package:coin_dashboard/features/data/models/trade_model.dart';
 import 'package:coin_dashboard/features/domain/entities/candle.dart';
 
+/// 마켓 한글명·영문명. 예: (korean: '비트코인', english: 'Bitcoin')
+typedef MarketName = ({String korean, String english});
+
 /// 원격 API 데이터 소스.
 abstract class CoinRemoteDataSource {
-  /// 마켓 코드 → 한글명. 예: {'KRW-BTC': '비트코인'}
-  Future<Map<String, String>> fetchMarketNames();
+  /// 마켓 코드 → 이름. 예: {'KRW-BTC': (korean: '비트코인', english: 'Bitcoin')}
+  Future<Map<String, MarketName>> fetchMarketNames();
 
   Future<List<MarketTickerModel>> fetchKrwTickers();
 
@@ -41,11 +44,14 @@ class CoinRemoteDataSourceImpl implements CoinRemoteDataSource {
   CoinRemoteDataSourceImpl(this.client);
 
   @override
-  Future<Map<String, String>> fetchMarketNames() async {
+  Future<Map<String, MarketName>> fetchMarketNames() async {
     final list = await _getList(ApiConstants.marketAll);
     return {
       for (final item in list.cast<Map<String, dynamic>>())
-        item['market'] as String: item['korean_name'] as String,
+        item['market'] as String: (
+          korean: item['korean_name'] as String,
+          english: item['english_name'] as String,
+        ),
     };
   }
 

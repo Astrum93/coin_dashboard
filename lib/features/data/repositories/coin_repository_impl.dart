@@ -18,10 +18,10 @@ class CoinRepositoryImpl implements CoinRepository {
   CoinRepositoryImpl(this.remote);
 
   /// 마켓 한글명 캐시. 목록은 자주 바뀌지 않아 처음 한 번만 받는다.
-  Future<Map<String, String>>? _names;
+  Future<Map<String, MarketName>>? _names;
 
   /// 동시에 불려도 한 번만 요청하고, 실패하면 다음에 다시 받는다.
-  Future<Map<String, String>> _marketNames() async {
+  Future<Map<String, MarketName>> _marketNames() async {
     try {
       return await (_names ??= remote.fetchMarketNames());
     } catch (_) {
@@ -39,7 +39,9 @@ class CoinRepositoryImpl implements CoinRepository {
       final models = await remote.fetchKrwTickers();
       return Ok([
         for (final m in models)
-          m.toEntity(koreanName: names[m.market] ?? m.market.split('-').last),
+          m.toEntity(
+            koreanName: names[m.market]?.korean ?? m.market.split('-').last,
+          ),
       ]);
     } catch (e) {
       return Err('시세 불러오기 실패: $e');
@@ -52,7 +54,9 @@ class CoinRepositoryImpl implements CoinRepository {
       final name = (await _marketNames())[market];
       if (name == null) return Err(_unknown(market));
       final model = await remote.fetchTicker(market);
-      return Ok(model.toEntity(koreanName: name));
+      return Ok(
+        model.toEntity(koreanName: name.korean, englishName: name.english),
+      );
     } catch (e) {
       return Err('시세 불러오기 실패: $e');
     }

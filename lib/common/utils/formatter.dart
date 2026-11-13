@@ -51,3 +51,13 @@ String formatVolume(double value) {
         : 4,
   ).format(value);
 }
+
+/// 지난 시간 표기. 방금 / 12분 전 / 3시간 전 / 2일 전 / 11월 3일
+String formatRelativeTime(DateTime time, {DateTime? now}) {
+  final diff = (now ?? DateTime.now()).difference(time);
+  if (diff.inMinutes < 1) return '방금';
+  if (diff.inHours < 1) return '${diff.inMinutes}분 전';
+  if (diff.inDays < 1) return '${diff.inHours}시간 전';
+  if (diff.inDays < 7) return '${diff.inDays}일 전';
+  return DateFormat('M월 d일').format(time);
+}

@@ -11,6 +11,8 @@ import 'package:coin_dashboard/features/presentation/coin_detail/widget/candle_c
 import 'package:coin_dashboard/features/presentation/coin_detail/widget/day_stats_card.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/widget/detail_breadcrumb.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/widget/detail_header.dart';
+import 'package:coin_dashboard/features/presentation/coin_detail/widget/news_card.dart';
+import 'package:coin_dashboard/features/presentation/coin_detail/widget/official_links_card.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/widget/orderbook_card.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/widget/trades_card.dart';
 import 'package:coin_dashboard/features/presentation/home/controller/home_controller.dart';
@@ -70,7 +72,8 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
             onTap: () => showLicensePage(
               context: context,
               applicationName: '코인 대시보드',
-              applicationLegalese: '시세 데이터: 업비트 공개 API',
+              applicationLegalese:
+                  '시세: 업비트 공개 API · 코인 정보: CoinGecko · 뉴스: 블록미디어, 토큰포스트',
             ),
           ),
         ],
@@ -137,10 +140,12 @@ class _DetailBody extends StatelessWidget {
           final main = <Widget>[
             CandleChartCard(tag: symbol),
             TradesCard(tag: symbol),
+            NewsCard(tag: symbol),
           ];
           final side = <Widget>[
             DayStatsCard(detail: detail),
             OrderbookCard(tag: symbol),
+            OfficialLinksCard(tag: symbol),
           ];
 
           return SingleChildScrollView(

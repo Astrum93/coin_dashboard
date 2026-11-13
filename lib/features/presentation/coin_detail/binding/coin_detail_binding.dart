@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:coin_dashboard/common/services/favorites_service.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_candles.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_coin_detail.dart';
+import 'package:coin_dashboard/features/domain/usecases/get_coin_links.dart';
+import 'package:coin_dashboard/features/domain/usecases/get_coin_news.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_orderbook.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_trades.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/controller/coin_detail_controller.dart';
@@ -22,6 +24,8 @@ class CoinDetailBinding extends Bindings {
         Get.find<GetCandles>(),
         Get.find<GetOrderbook>(),
         Get.find<GetTrades>(),
+        Get.find<GetCoinLinks>(),
+        Get.find<GetCoinNews>(),
         Get.find<FavoritesService>(),
       ),
       tag: symbol,

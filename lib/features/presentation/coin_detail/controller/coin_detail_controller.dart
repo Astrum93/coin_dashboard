@@ -6,10 +6,14 @@ import 'package:coin_dashboard/common/error/result.dart';
 import 'package:coin_dashboard/common/services/favorites_service.dart';
 import 'package:coin_dashboard/features/domain/entities/candle.dart';
 import 'package:coin_dashboard/features/domain/entities/coin_detail.dart';
+import 'package:coin_dashboard/features/domain/entities/coin_links.dart';
+import 'package:coin_dashboard/features/domain/entities/news_article.dart';
 import 'package:coin_dashboard/features/domain/entities/orderbook.dart';
 import 'package:coin_dashboard/features/domain/entities/trade.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_candles.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_coin_detail.dart';
+import 'package:coin_dashboard/features/domain/usecases/get_coin_links.dart';
+import 'package:coin_dashboard/features/domain/usecases/get_coin_news.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_orderbook.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_trades.dart';
 
@@ -43,6 +47,8 @@ class CoinDetailController extends GetxController {
   final GetCandles getCandles;
   final GetOrderbook getOrderbook;
   final GetTrades getTrades;
+  final GetCoinLinks getCoinLinks;
+  final GetCoinNews getCoinNews;
   final FavoritesService favoritesService;
 
   CoinDetailController(
@@ -51,6 +57,8 @@ class CoinDetailController extends GetxController {
     this.getCandles,
     this.getOrderbook,
     this.getTrades,
+    this.getCoinLinks,
+    this.getCoinNews,
     this.favoritesService,
   );
 
@@ -74,6 +82,13 @@ class CoinDetailController extends GetxController {
 
   /// 호가·체결 중 하나라도 실패하면 메시지가 남는다.
   final RxnString depthError = RxnString();
+
+  /// 첫 시세를 받은 뒤 한 번만 조회한다. null 이면 아직 못 받음.
+  final Rxn<List<CoinLink>> links = Rxn<List<CoinLink>>();
+  final RxnString linksError = RxnString();
+  final Rxn<List<NewsArticle>> news = Rxn<List<NewsArticle>>();
+  final RxnString newsError = RxnString();
+  bool _infoRequested = false;
 
   Timer? _timer;
   Timer? _candleTimer;
@@ -116,6 +131,11 @@ class CoinDetailController extends GetxController {
       case Ok(value: final value):
         detail.value = value;
         error.value = null;
+        if (!_infoRequested) {
+          _infoRequested = true;
+          loadLinks();
+          loadNews();
+        }
       case Err(message: final m):
         error.value = m;
     }
@@ -158,6 +178,40 @@ class CoinDetailController extends GetxController {
         chartError.value = m;
     }
     chartLoading.value = false;
+  }
+
+  /// 공식 채널 조회. 이름이 필요해 시세를 받은 뒤 부른다.
+  Future<void> loadLinks() async {
+    final coin = detail.value;
+    if (coin == null) return;
+    linksError.value = null;
+    final result = await getCoinLinks(
+      symbol: symbol,
+      englishName: coin.englishName,
+    );
+    switch (result) {
+      case Ok(value: final value):
+        links.value = value;
+      case Err(message: final m):
+        linksError.value = m;
+    }
+  }
+
+  /// 관련 뉴스 조회. 이름이 필요해 시세를 받은 뒤 부른다.
+  Future<void> loadNews() async {
+    final coin = detail.value;
+    if (coin == null) return;
+    newsError.value = null;
+    final result = await getCoinNews(
+      symbol: symbol,
+      koreanName: coin.koreanName,
+    );
+    switch (result) {
+      case Ok(value: final value):
+        news.value = value;
+      case Err(message: final m):
+        newsError.value = m;
+    }
   }
 
   void changePeriod(DetailPeriod value) {

@@ -50,7 +50,8 @@ class HomeScreen extends StatelessWidget {
             onTap: () => showLicensePage(
               context: context,
               applicationName: '코인 대시보드',
-              applicationLegalese: '시세 데이터: 업비트 공개 API',
+              applicationLegalese:
+                  '시세: 업비트 공개 API · 코인 정보: CoinGecko · 뉴스: 블록미디어, 토큰포스트',
             ),
           ),
         ],
