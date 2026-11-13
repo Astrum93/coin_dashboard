@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import 'package:coin_dashboard/common/services/favorites_service.dart';
+import 'package:coin_dashboard/features/domain/usecases/get_candles.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_coin_detail.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/controller/coin_detail_controller.dart';
 
@@ -16,6 +17,7 @@ class CoinDetailBinding extends Bindings {
       () => CoinDetailController(
         symbol,
         Get.find<GetCoinDetail>(),
+        Get.find<GetCandles>(),
         Get.find<FavoritesService>(),
       ),
       tag: symbol,

@@ -18,11 +18,12 @@ abstract class CoinRemoteDataSource {
   /// [market] 예: 'KRW-BTC'
   Future<CoinDetailModel> fetchTicker(String market);
 
-  /// 응답 그대로 최신 캔들이 앞에 온다.
+  /// 응답 그대로 최신 캔들이 앞에 온다. count 는 최대 200, [to] 이전 캔들만.
   Future<List<CandleModel>> fetchCandles({
     required String market,
     required CandleUnit unit,
     required int count,
+    String? to,
   });
 }
 
@@ -62,14 +63,19 @@ class CoinRemoteDataSourceImpl implements CoinRemoteDataSource {
     required String market,
     required CandleUnit unit,
     required int count,
+    String? to,
   }) async {
     final path = switch (unit) {
+      CandleUnit.minutes15 => 'minutes/15',
       CandleUnit.minutes30 => 'minutes/30',
+      CandleUnit.minutes60 => 'minutes/60',
       CandleUnit.minutes240 => 'minutes/240',
       CandleUnit.days => 'days',
       CandleUnit.weeks => 'weeks',
     };
-    final list = await _getList(ApiConstants.candles(path, market, count));
+    final list = await _getList(
+      ApiConstants.candles(path, market, count, to: to),
+    );
     return list.cast<Map<String, dynamic>>().map(CandleModel.fromJson).toList();
   }
 

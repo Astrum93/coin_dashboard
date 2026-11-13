@@ -5,9 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:coin_dashboard/app/router/app_routes.dart';
 import 'package:coin_dashboard/app/theme/app_breakpoints.dart';
 import 'package:coin_dashboard/app/theme/app_text_styles.dart';
-import 'package:coin_dashboard/common/widgets/app_card.dart';
 import 'package:coin_dashboard/common/widgets/dashboard_shell.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/controller/coin_detail_controller.dart';
+import 'package:coin_dashboard/features/presentation/coin_detail/widget/candle_chart_card.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/widget/day_stats_card.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/widget/detail_breadcrumb.dart';
 import 'package:coin_dashboard/features/presentation/coin_detail/widget/detail_header.dart';
@@ -132,15 +132,8 @@ class _DetailBody extends StatelessWidget {
               ? 32.0
               : 16.0;
 
-          // 3단계부터 차트·체결 카드로 채운다.
-          const main = <Widget>[
-            AppCard(
-              child: Text(
-                '차트·호가·체결은 다음 단계에서 채웁니다.',
-                style: AppTextStyles.CAPTION,
-              ),
-            ),
-          ];
+          // 4단계에서 체결 카드가 붙는다.
+          final main = <Widget>[CandleChartCard(tag: symbol)];
           final side = <Widget>[DayStatsCard(detail: detail)];
 
           return SingleChildScrollView(
@@ -156,7 +149,7 @@ class _DetailBody extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 16,
                     children: [
-                      const Expanded(
+                      Expanded(
                         flex: 2,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,

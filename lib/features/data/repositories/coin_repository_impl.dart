@@ -1,5 +1,9 @@
+import 'dart:math' as math;
+
+import 'package:coin_dashboard/common/constants/api_constants.dart';
 import 'package:coin_dashboard/common/error/result.dart';
 import 'package:coin_dashboard/features/data/datasources/coin_remote_data_source.dart';
+import 'package:coin_dashboard/features/data/models/candle_model.dart';
 import 'package:coin_dashboard/features/domain/entities/candle.dart';
 import 'package:coin_dashboard/features/domain/entities/coin_detail.dart';
 import 'package:coin_dashboard/features/domain/entities/market_ticker.dart';
@@ -48,11 +52,24 @@ class CoinRepositoryImpl implements CoinRepository {
     required int count,
   }) async {
     try {
-      final models = await remote.fetchCandles(
-        market: market,
-        unit: unit,
-        count: count,
-      );
+      // 한 번에 200개까지라 넘치면 가장 오래된 캔들 이전을 이어 받는다.
+      final models = <CandleModel>[];
+      String? to;
+      while (models.length < count) {
+        final size = math.min(
+          ApiConstants.candleMaxCount,
+          count - models.length,
+        );
+        final page = await remote.fetchCandles(
+          market: market,
+          unit: unit,
+          count: size,
+          to: to,
+        );
+        models.addAll(page);
+        if (page.length < size) break;
+        to = '${page.last.candleDateTimeUtc}Z';
+      }
       return Ok(models.reversed.map((m) => m.toEntity()).toList());
     } catch (e) {
       return Err('차트 불러오기 실패: $e');

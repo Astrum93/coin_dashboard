@@ -13,7 +13,13 @@ class ApiConstants {
   /// 전체 마켓 목록 (한글명 포함).
   static const String marketAll = '$base/market/all?isDetails=false';
 
+  /// 캔들 한 번에 받을 수 있는 최대 개수.
+  static const int candleMaxCount = 200;
+
   /// 캔들 URL. path 예: 'minutes/30', 'days', 'weeks'
-  static String candles(String path, String market, int count) =>
-      '$base/candles/$path?market=$market&count=$count';
+  /// [to] 는 UTC 'yyyy-MM-ddTHH:mm:ssZ', 이 시각은 결과에서 빠진다.
+  static String candles(String path, String market, int count, {String? to}) {
+    final url = '$base/candles/$path?market=$market&count=$count';
+    return to == null ? url : '$url&to=${Uri.encodeQueryComponent(to)}';
+  }
 }
