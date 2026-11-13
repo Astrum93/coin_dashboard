@@ -4,17 +4,18 @@
 
 이 앱이 만들어지는 과정을 날짜순으로 기록합니다. 최신 항목이 위에 있습니다.
 
-## 2026-11-13 · 🚩 Android·iOS 플랫폼 추가
+## 2026-11-13 · 🚩 Android·iOS 플랫폼 추가와 코인 상세 화면
 
-휴대폰에서도 보려고 웹뷰 래퍼 대신 같은 코드를 네이티브로 빌드하도록 모바일 플랫폼을 추가하고, 흩어진 화면 폭 기준값을 한 곳으로 모았다.
+모바일 플랫폼을 추가하고 화면 폭·테마 상수를 정리한 뒤, 홈에서 코인을 누르면 열리는 상세 화면(`/coin/:symbol`)을 6단계로 나눠 만들었다.
 
-- `flutter create --platforms=android,ios`로 플랫폼 추가, 패키지·번들 ID `com.spacena.*`, 앱 이름 "코인 대시보드"
-- Android release 매니페스트에 `INTERNET` 권한 추가
-- `AppBreakpoints`(520/600/900/1000) 추가, 홈·셸·요약 카드·차트의 하드코딩 값 교체
-- 테마 상수(`AppColors`, `AppTextStyles`, `AppBreakpoints` 등)명을 대문자 스네이크 케이스로 변경
-- 단일 BTC 시세 경로(`GetCoinPrice`, `Coin`, `CoinModel`) 등 쓰지 않는 코드 삭제
+- Android·iOS 플랫폼 추가(패키지·번들 ID `com.spacena.*`), `AppBreakpoints` 도입, 테마 상수명을 대문자 스네이크 케이스로, 쓰지 않는 단일 시세 경로 삭제
+- 관심 코인을 `FavoritesService`로 분리, 상세 컨트롤러는 심볼 tag로 등록하고 화면 dispose에서 삭제(go_router라 GetX가 자동 정리하지 않음)
+- 헤더·시세 요약(당일 범위, 52주 최고·최저)·호가 5단계·최근 체결을 3초 폴링으로 갱신
+- `CustomPainter` 캔들/라인 차트: 15분·1시간·4시간·일·1년(일봉 365개, 200개 제한을 `to`로 이어 받기), 거래량, 1·2·5 단위 가격 눈금, 전일 대비 색의 현재가 태그
+- 북마크형 관련 뉴스(rss2json + 블록미디어·토큰포스트 RSS, 없으면 Google 뉴스 링크), CoinGecko 공식 채널 링크, `url_launcher` 추가
+- 없는 심볼은 `Ok(null)`로 구분해 안내 화면을 띄우고 폴링 중지, 좁은 화면 카드 순서 정리
 
-`#설정` `#리팩토링` `#Flutter`  ·  커밋: 941783a, a17c349, e74894f, dd196fc
+`#기능` `#UI` `#GetX` `#CustomPainter`  ·  커밋: 941783a, a17c349, e74894f, dd196fc, d677d14, 55f01b0, 4ed74e1, 41fe5cc, 7d8c7a8, 0bbf90d, 1b5e08e
 
 ## 2026-10-21 · 🚩 업비트 전환, 구조 재편, 디자인 가이드 적용
 
