@@ -1,39 +1,129 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:coin_dashboard/app/router/app_routes.dart';
+import 'package:coin_dashboard/app/theme/app_breakpoints.dart';
+import 'package:coin_dashboard/app/theme/app_text_styles.dart';
+import 'package:coin_dashboard/common/widgets/app_card.dart';
+import 'package:coin_dashboard/common/widgets/app_icon_button.dart';
+import 'package:coin_dashboard/common/widgets/coin_avatar.dart';
+import 'package:coin_dashboard/common/widgets/dashboard_shell.dart';
+import 'package:coin_dashboard/features/presentation/coin_detail/controller/coin_detail_controller.dart';
+import 'package:coin_dashboard/features/presentation/coin_detail/widget/detail_breadcrumb.dart';
+import 'package:coin_dashboard/features/presentation/home/controller/home_controller.dart';
 
-/// 코인 상세 화면 (골격만). [symbol] 은 URL 의 :symbol.
-class CoinDetailScreen extends StatelessWidget {
+/// 코인 상세 화면. [symbol] 은 URL 의 :symbol (대문자).
+class CoinDetailScreen extends StatefulWidget {
   const CoinDetailScreen({super.key, required this.symbol});
 
   final String symbol;
 
   @override
+  State<CoinDetailScreen> createState() => _CoinDetailScreenState();
+}
+
+class _CoinDetailScreenState extends State<CoinDetailScreen> {
+  /// go_router 는 GetX 라우트 관리를 거치지 않아 화면이 사라질 때 직접 지운다.
+  @override
+  void dispose() {
+    Get.delete<CoinDetailController>(tag: widget.symbol);
+    super.dispose();
+  }
+
+  /// 홈으로 돌아가 원화 마켓 표로 스크롤한다.
+  void _goToMarkets(MarketFilter filter) {
+    context.go(AppRoutes.home);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => Get.find<HomeController>().scrollToMarkets(withFilter: filter),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('$symbol 상세'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              symbol,
-              style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text('상세 화면은 이후 단계에서 채웁니다.'),
-            const SizedBox(height: 24),
-            OutlinedButton(
-              onPressed: () => context.go(AppRoutes.home),
-              child: const Text('← 홈으로'),
-            ),
-          ],
+    return DashboardShell(
+      navItems: [
+        ShellNavItem(
+          icon: Icons.dashboard_rounded,
+          label: '대시보드',
+          onTap: () => context.go(AppRoutes.home),
         ),
-      ),
+        ShellNavItem(
+          icon: Icons.format_list_bulleted_rounded,
+          label: '원화 마켓',
+          onTap: () => _goToMarkets(MarketFilter.all),
+        ),
+        ShellNavItem(
+          icon: Icons.star_outline_rounded,
+          label: '관심 코인',
+          onTap: () => _goToMarkets(MarketFilter.favorite),
+        ),
+        ShellNavItem(
+          icon: Icons.info_outline_rounded,
+          label: '정보',
+          onTap: () => showLicensePage(
+            context: context,
+            applicationName: '코인 대시보드',
+            applicationLegalese: '시세 데이터: 업비트 공개 API',
+          ),
+        ),
+      ],
+      child: _DetailBody(symbol: widget.symbol),
+    );
+  }
+}
+
+class _DetailBody extends StatelessWidget {
+  const _DetailBody({required this.symbol});
+
+  final String symbol;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<CoinDetailController>(tag: symbol);
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final gutter = constraints.maxWidth >= AppBreakpoints.TABLET
+            ? 32.0
+            : 16.0;
+
+        return SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(gutter, 20, gutter, 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            spacing: 20,
+            children: [
+              DetailBreadcrumb(current: symbol),
+              Row(
+                children: [
+                  CoinAvatar(symbol: symbol),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      '$symbol/KRW',
+                      style: AppTextStyles.TITLE,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Obx(
+                    () => FavoriteButton(
+                      isFavorite: controller.isFavorite,
+                      onPressed: controller.toggleFavorite,
+                    ),
+                  ),
+                ],
+              ),
+              const AppCard(
+                child: Text(
+                  '시세·차트·호가·체결은 다음 단계에서 채웁니다.',
+                  style: AppTextStyles.CAPTION,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

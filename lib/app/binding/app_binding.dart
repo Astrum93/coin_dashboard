@@ -1,3 +1,4 @@
+import 'package:coin_dashboard/common/services/favorites_service.dart';
 import 'package:coin_dashboard/features/data/datasources/coin_remote_data_source.dart';
 import 'package:coin_dashboard/features/data/repositories/coin_repository_impl.dart';
 import 'package:coin_dashboard/features/domain/repositories/coin_repository.dart';
@@ -20,5 +21,6 @@ class AppBinding extends Bindings {
     );
     Get.lazyPut<GetKrwTickers>(() => GetKrwTickers(Get.find<CoinRepository>()));
     Get.lazyPut<GetCandles>(() => GetCandles(Get.find<CoinRepository>()));
+    Get.lazyPut<FavoritesService>(() => FavoritesService());
   }
 }

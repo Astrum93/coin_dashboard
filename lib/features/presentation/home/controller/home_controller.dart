@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import 'package:coin_dashboard/common/error/result.dart';
+import 'package:coin_dashboard/common/services/favorites_service.dart';
 import 'package:coin_dashboard/features/domain/entities/candle.dart';
 import 'package:coin_dashboard/features/domain/entities/market_ticker.dart';
 import 'package:coin_dashboard/features/domain/usecases/get_candles.dart';
@@ -42,8 +43,9 @@ enum HomeNav { dashboard, markets, favorites }
 class HomeController extends GetxController {
   final GetKrwTickers getKrwTickers;
   final GetCandles getCandles;
+  final FavoritesService favoritesService;
 
-  HomeController(this.getKrwTickers, this.getCandles);
+  HomeController(this.getKrwTickers, this.getCandles, this.favoritesService);
 
   static const String featuredMarket = 'KRW-BTC';
   static const Duration refreshInterval = Duration(seconds: 10);
@@ -62,7 +64,6 @@ class HomeController extends GetxController {
 
   final RxString query = ''.obs;
   final Rx<MarketFilter> filter = MarketFilter.all.obs;
-  final RxSet<String> favorites = <String>{}.obs; // 마켓 코드. 앱을 끄면 사라진다
   final RxBool showRisers = true.obs;
   final RxInt visibleCount = pageSize.obs;
 
@@ -159,9 +160,9 @@ class HomeController extends GetxController {
 
   void showMore() => visibleCount.value += pageSize;
 
-  void toggleFavorite(String market) {
-    if (!favorites.remove(market)) favorites.add(market);
-  }
+  RxSet<String> get favorites => favoritesService.markets;
+
+  void toggleFavorite(String market) => favoritesService.toggle(market);
 
   void scrollToTop() {
     scrollController.animateTo(
