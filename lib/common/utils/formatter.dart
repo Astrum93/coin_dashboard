@@ -38,3 +38,11 @@ String formatPrice(double value) {
     unit: '',
   );
 }
+
+/// 코인 수량 표기. 1,000 이상은 정수, 미만은 소수 셋째 자리까지. 2787.705 → "2,788"
+String formatVolume(double value) {
+  return NumberFormat.decimalPatternDigits(
+    locale: 'ko_KR',
+    decimalDigits: value.abs() >= 1000 ? 0 : 3,
+  ).format(value);
+}

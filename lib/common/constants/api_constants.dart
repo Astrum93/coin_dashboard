@@ -4,6 +4,9 @@ class ApiConstants {
 
   static const String base = 'https://api.upbit.com/v1';
 
+  /// 한 종목 현재가. market 예: 'KRW-BTC'
+  static String ticker(String market) => '$base/ticker?markets=$market';
+
   /// 원화 마켓 전체 현재가.
   static const String krwTickers = '$base/ticker/all?quote_currencies=KRW';
 

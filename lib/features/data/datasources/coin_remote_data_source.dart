@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:coin_dashboard/common/constants/api_constants.dart';
 import 'package:coin_dashboard/features/data/models/candle_model.dart';
+import 'package:coin_dashboard/features/data/models/coin_detail_model.dart';
 import 'package:coin_dashboard/features/data/models/market_ticker_model.dart';
 import 'package:coin_dashboard/features/domain/entities/candle.dart';
 
@@ -13,6 +14,9 @@ abstract class CoinRemoteDataSource {
   Future<Map<String, String>> fetchMarketNames();
 
   Future<List<MarketTickerModel>> fetchKrwTickers();
+
+  /// [market] 예: 'KRW-BTC'
+  Future<CoinDetailModel> fetchTicker(String market);
 
   /// 응답 그대로 최신 캔들이 앞에 온다.
   Future<List<CandleModel>> fetchCandles({
@@ -44,6 +48,13 @@ class CoinRemoteDataSourceImpl implements CoinRemoteDataSource {
         .cast<Map<String, dynamic>>()
         .map(MarketTickerModel.fromJson)
         .toList();
+  }
+
+  @override
+  Future<CoinDetailModel> fetchTicker(String market) async {
+    final list = await _getList(ApiConstants.ticker(market));
+    if (list.isEmpty) throw Exception('시세 없음: $market');
+    return CoinDetailModel.fromJson(list.first as Map<String, dynamic>);
   }
 
   @override

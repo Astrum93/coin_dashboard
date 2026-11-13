@@ -1,6 +1,7 @@
 import 'package:coin_dashboard/common/error/result.dart';
 import 'package:coin_dashboard/features/data/datasources/coin_remote_data_source.dart';
 import 'package:coin_dashboard/features/domain/entities/candle.dart';
+import 'package:coin_dashboard/features/domain/entities/coin_detail.dart';
 import 'package:coin_dashboard/features/domain/entities/market_ticker.dart';
 import 'package:coin_dashboard/features/domain/repositories/coin_repository.dart';
 
@@ -22,6 +23,19 @@ class CoinRepositoryImpl implements CoinRepository {
         for (final m in models)
           m.toEntity(koreanName: names[m.market] ?? m.market.split('-').last),
       ]);
+    } catch (e) {
+      return Err('시세 불러오기 실패: $e');
+    }
+  }
+
+  @override
+  Future<Result<CoinDetail>> getCoinDetail(String market) async {
+    try {
+      final names = _names ??= await remote.fetchMarketNames();
+      final name = names[market];
+      if (name == null) return Err('업비트에 없는 마켓입니다: $market');
+      final model = await remote.fetchTicker(market);
+      return Ok(model.toEntity(koreanName: name));
     } catch (e) {
       return Err('시세 불러오기 실패: $e');
     }
