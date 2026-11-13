@@ -4,14 +4,11 @@ import 'package:http/http.dart' as http;
 
 import 'package:coin_dashboard/common/constants/api_constants.dart';
 import 'package:coin_dashboard/features/data/models/candle_model.dart';
-import 'package:coin_dashboard/features/data/models/coin_model.dart';
 import 'package:coin_dashboard/features/data/models/market_ticker_model.dart';
 import 'package:coin_dashboard/features/domain/entities/candle.dart';
 
 /// 원격 API 데이터 소스.
 abstract class CoinRemoteDataSource {
-  Future<CoinModel> fetchPrice({required String id, required String symbol});
-
   /// 마켓 코드 → 한글명. 예: {'KRW-BTC': '비트코인'}
   Future<Map<String, String>> fetchMarketNames();
 
@@ -30,22 +27,6 @@ class CoinRemoteDataSourceImpl implements CoinRemoteDataSource {
   final http.Client client;
 
   CoinRemoteDataSourceImpl(this.client);
-
-  /// [id] 는 업비트 마켓 코드. 예: 'KRW-BTC'
-  @override
-  Future<CoinModel> fetchPrice({
-    required String id,
-    required String symbol,
-  }) async {
-    final list = await _getList(ApiConstants.ticker(id));
-    if (list.isEmpty) {
-      throw Exception('시세 없음: $id');
-    }
-    return CoinModel.fromTicker(
-      symbol: symbol,
-      json: list.first as Map<String, dynamic>,
-    );
-  }
 
   @override
   Future<Map<String, String>> fetchMarketNames() async {

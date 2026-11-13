@@ -6,7 +6,6 @@ import 'package:coin_dashboard/app/theme/app_text_styles.dart';
 /// 앱 전역 다크 테마.
 abstract class AppTheme {
   static const double radiusCard = 16;
-  static const double radiusControl = 12;
 
   static ThemeData get dark {
     const scheme = ColorScheme.dark(
