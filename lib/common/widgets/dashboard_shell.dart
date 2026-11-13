@@ -19,7 +19,7 @@ class ShellNavItem {
   final bool selected;
 }
 
-/// 사이드바 + 본문 레이아웃. 좁은 화면(AppBreakpoints.sidebar 미만)에선 메뉴가 위로 올라간다.
+/// 사이드바 + 본문 레이아웃. 좁은 화면(AppBreakpoints.SIDEBAR 미만)에선 메뉴가 위로 올라간다.
 class DashboardShell extends StatelessWidget {
   const DashboardShell({
     super.key,
@@ -39,7 +39,7 @@ class DashboardShell extends StatelessWidget {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
-          final wide = constraints.maxWidth >= AppBreakpoints.sidebar;
+          final wide = constraints.maxWidth >= AppBreakpoints.SIDEBAR;
           final sidebar = _Sidebar(
             navItems: navItems,
             connected: connected,
@@ -88,14 +88,14 @@ class _Sidebar extends StatelessWidget {
       width: wide ? 220 : null,
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: wide ? 24 : 12),
       decoration: BoxDecoration(
-        color: AppColors.sidebar,
+        color: AppColors.SIDEBAR,
         border: Border(
           right: wide
-              ? const BorderSide(color: AppColors.border)
+              ? const BorderSide(color: AppColors.BORDER)
               : BorderSide.none,
           bottom: wide
               ? BorderSide.none
-              : const BorderSide(color: AppColors.border),
+              : const BorderSide(color: AppColors.BORDER),
         ),
       ),
       child: wide
@@ -133,13 +133,13 @@ class _Logo extends StatelessWidget {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: AppColors.accent,
+              color: AppColors.ACCENT,
               borderRadius: BorderRadius.circular(10),
             ),
             child: const Icon(
               Icons.show_chart_rounded,
               size: 20,
-              color: AppColors.onAccent,
+              color: AppColors.ON_ACCENT,
             ),
           ),
           const SizedBox(width: 10),
@@ -147,7 +147,7 @@ class _Logo extends StatelessWidget {
             child: Text(
               '코인 대시보드',
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.heading.copyWith(
+              style: AppTextStyles.HEADING.copyWith(
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -166,7 +166,7 @@ class _NavTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = item.selected ? AppColors.textPrimary : AppColors.textMuted;
+    final color = item.selected ? AppColors.TEXT_PRIMARY : AppColors.TEXT_MUTED;
     final radius = BorderRadius.circular(10);
 
     return Padding(
@@ -175,7 +175,7 @@ class _NavTile extends StatelessWidget {
         button: true,
         selected: item.selected,
         child: Material(
-          color: item.selected ? AppColors.surfaceRaised : Colors.transparent,
+          color: item.selected ? AppColors.SURFACE_RAISED : Colors.transparent,
           borderRadius: radius,
           child: InkWell(
             borderRadius: radius,
@@ -192,7 +192,7 @@ class _NavTile extends StatelessWidget {
                     child: Text(
                       item.label,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.body.copyWith(
+                      style: AppTextStyles.BODY.copyWith(
                         color: color,
                         fontWeight: item.selected
                             ? FontWeight.w600
@@ -220,9 +220,9 @@ class _ConnectionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: AppColors.SURFACE,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.BORDER),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -233,7 +233,7 @@ class _ConnectionCard extends StatelessWidget {
                 width: 8,
                 height: 8,
                 decoration: BoxDecoration(
-                  color: connected ? AppColors.accent : AppColors.rise,
+                  color: connected ? AppColors.ACCENT : AppColors.RISE,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -242,13 +242,13 @@ class _ConnectionCard extends StatelessWidget {
                 child: Text(
                   connected ? '업비트 API 연결됨' : '업비트 API 연결 끊김',
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.label,
+                  style: AppTextStyles.LABEL,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 6),
-          const Text('시세 자동 갱신 · 공개 API', style: AppTextStyles.caption),
+          const Text('시세 자동 갱신 · 공개 API', style: AppTextStyles.CAPTION),
         ],
       ),
     );

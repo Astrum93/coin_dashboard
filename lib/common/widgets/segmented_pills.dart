@@ -40,9 +40,9 @@ class SegmentedPills<T> extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: AppColors.BACKGROUND,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.BORDER),
       ),
       child: Row(mainAxisSize: MainAxisSize.min, spacing: 4, children: items),
     );
@@ -69,13 +69,13 @@ class _PillButton extends StatelessWidget {
     final Color foreground;
     if (!selected) {
       background = Colors.transparent;
-      foreground = AppColors.textMuted;
+      foreground = AppColors.TEXT_MUTED;
     } else if (isPill) {
-      background = AppColors.accent;
-      foreground = AppColors.onAccent;
+      background = AppColors.ACCENT;
+      foreground = AppColors.ON_ACCENT;
     } else {
-      background = AppColors.border;
-      foreground = AppColors.textPrimary;
+      background = AppColors.BORDER;
+      foreground = AppColors.TEXT_PRIMARY;
     }
     final radius = BorderRadius.circular(isPill ? 999 : 9);
 
@@ -88,7 +88,7 @@ class _PillButton extends StatelessWidget {
           borderRadius: radius,
           side: isPill
               ? BorderSide(
-                  color: selected ? AppColors.accent : AppColors.border,
+                  color: selected ? AppColors.ACCENT : AppColors.BORDER,
                 )
               : BorderSide.none,
         ),
@@ -104,7 +104,7 @@ class _PillButton extends StatelessWidget {
               widthFactor: 1,
               child: Text(
                 label,
-                style: AppTextStyles.label.copyWith(color: foreground),
+                style: AppTextStyles.LABEL.copyWith(color: foreground),
               ),
             ),
           ),

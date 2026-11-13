@@ -36,7 +36,7 @@ class MarketTable extends StatelessWidget {
               spacing: 16,
               runSpacing: 12,
               children: [
-                const Text('원화 마켓', style: AppTextStyles.heading),
+                const Text('원화 마켓', style: AppTextStyles.HEADING),
                 Obx(
                   () => SegmentedPills<MarketFilter>(
                     variant: PillVariant.pill,
@@ -48,7 +48,7 @@ class MarketTable extends StatelessWidget {
                     onChanged: controller.changeFilter,
                   ),
                 ),
-                const Text('거래대금순', style: AppTextStyles.caption),
+                const Text('거래대금순', style: AppTextStyles.CAPTION),
               ],
             ),
           ),
@@ -80,7 +80,7 @@ class MarketTable extends StatelessWidget {
                           child: Text(
                             '조건에 맞는 코인이 없습니다.',
                             textAlign: TextAlign.center,
-                            style: AppTextStyles.caption,
+                            style: AppTextStyles.CAPTION,
                           ),
                         ),
                       if (visible.length < all.length)
@@ -90,12 +90,12 @@ class MarketTable extends StatelessWidget {
                             child: TextButton(
                               onPressed: controller.showMore,
                               style: TextButton.styleFrom(
-                                foregroundColor: AppColors.textPrimary,
+                                foregroundColor: AppColors.TEXT_PRIMARY,
                                 minimumSize: const Size(0, 44),
                               ),
                               child: Text(
                                 '더 보기 (${visible.length} / ${all.length})',
-                                style: AppTextStyles.label,
+                                style: AppTextStyles.LABEL,
                               ),
                             ),
                           ),
@@ -123,16 +123,16 @@ class _HeaderRow extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget cell(int i, String text, TextAlign align) => Expanded(
       flex: _flex[i],
-      child: Text(text, textAlign: align, style: AppTextStyles.caption),
+      child: Text(text, textAlign: align, style: AppTextStyles.CAPTION),
     );
 
     return Container(
       height: 40,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: const BoxDecoration(
-        color: AppColors.surfaceSunken,
+        color: AppColors.SURFACE_SUNKEN,
         border: Border.symmetric(
-          horizontal: BorderSide(color: AppColors.border),
+          horizontal: BorderSide(color: AppColors.BORDER),
         ),
       ),
       child: Row(
@@ -147,7 +147,7 @@ class _HeaderRow extends StatelessWidget {
             child: Text(
               '관심',
               textAlign: TextAlign.center,
-              style: AppTextStyles.caption,
+              style: AppTextStyles.CAPTION,
             ),
           ),
         ],
@@ -177,7 +177,7 @@ class _TickerRow extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 64),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
+        border: Border(bottom: BorderSide(color: AppColors.DIVIDER)),
       ),
       child: Row(
         spacing: 16,
@@ -194,12 +194,12 @@ class _TickerRow extends StatelessWidget {
                     children: [
                       Text(
                         ticker.koreanName,
-                        style: AppTextStyles.bodyStrong,
+                        style: AppTextStyles.BODY_STRONG,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         '${ticker.symbol}/KRW',
-                        style: AppTextStyles.caption,
+                        style: AppTextStyles.CAPTION,
                       ),
                     ],
                   ),
@@ -212,7 +212,7 @@ class _TickerRow extends StatelessWidget {
             child: Text(
               formatPrice(ticker.price),
               textAlign: TextAlign.right,
-              style: AppTextStyles.number.copyWith(color: color),
+              style: AppTextStyles.NUMBER.copyWith(color: color),
             ),
           ),
           Expanded(
@@ -224,8 +224,8 @@ class _TickerRow extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   '$sign${formatPrice(ticker.changePrice.abs())}',
-                  style: AppTextStyles.numberSmall.copyWith(
-                    color: AppColors.textMuted,
+                  style: AppTextStyles.NUMBER_SMALL.copyWith(
+                    color: AppColors.TEXT_MUTED,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -237,7 +237,7 @@ class _TickerRow extends StatelessWidget {
             child: Text(
               '${volume.value}${volume.unit}',
               textAlign: TextAlign.right,
-              style: AppTextStyles.number,
+              style: AppTextStyles.NUMBER,
             ),
           ),
           SizedBox(

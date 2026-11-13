@@ -29,15 +29,15 @@ class HomeHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('대시보드', style: AppTextStyles.title),
+              const Text('대시보드', style: AppTextStyles.TITLE),
               const SizedBox(height: 6),
               Obx(() {
                 final error = controller.error.value;
                 if (error != null) {
                   return Text(
                     error,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.rise,
+                    style: AppTextStyles.CAPTION.copyWith(
+                      color: AppColors.RISE,
                     ),
                   );
                 }
@@ -46,7 +46,7 @@ class HomeHeader extends StatelessWidget {
                   at == null
                       ? '원화(KRW) 마켓'
                       : '원화(KRW) 마켓 · 마지막 갱신 ${DateFormat('HH:mm:ss').format(at)}',
-                  style: AppTextStyles.caption.copyWith(fontSize: 13),
+                  style: AppTextStyles.CAPTION.copyWith(fontSize: 13),
                 );
               }),
             ],

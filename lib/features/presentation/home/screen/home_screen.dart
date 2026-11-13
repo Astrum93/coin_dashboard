@@ -77,7 +77,7 @@ class _HomeBody extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(error, style: AppTextStyles.caption),
+              Text(error, style: AppTextStyles.CAPTION),
               const SizedBox(height: 12),
               OutlinedButton(
                 onPressed: controller.fetch,
@@ -90,8 +90,8 @@ class _HomeBody extends StatelessWidget {
 
       return LayoutBuilder(
         builder: (context, constraints) {
-          final wide = constraints.maxWidth >= AppBreakpoints.desktop;
-          final gutter = constraints.maxWidth >= AppBreakpoints.tablet
+          final wide = constraints.maxWidth >= AppBreakpoints.DESKTOP;
+          final gutter = constraints.maxWidth >= AppBreakpoints.TABLET
               ? 32.0
               : 16.0;
 

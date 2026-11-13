@@ -24,7 +24,7 @@ class MoversCard extends StatelessWidget {
           Row(
             children: [
               const Expanded(
-                child: Text('등락률 순위', style: AppTextStyles.heading),
+                child: Text('등락률 순위', style: AppTextStyles.HEADING),
               ),
               Obx(
                 () => SegmentedPills<bool>(
@@ -49,8 +49,8 @@ class MoversCard extends StatelessWidget {
                           width: 20,
                           child: Text(
                             '${i + 1}',
-                            style: AppTextStyles.numberSmall.copyWith(
-                              color: AppColors.textMuted,
+                            style: AppTextStyles.NUMBER_SMALL.copyWith(
+                              color: AppColors.TEXT_MUTED,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -64,12 +64,12 @@ class MoversCard extends StatelessWidget {
                             children: [
                               Text(
                                 movers[i].koreanName,
-                                style: AppTextStyles.bodyStrong,
+                                style: AppTextStyles.BODY_STRONG,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
                                 movers[i].symbol,
-                                style: AppTextStyles.caption,
+                                style: AppTextStyles.CAPTION,
                               ),
                             ],
                           ),
@@ -80,11 +80,11 @@ class MoversCard extends StatelessWidget {
                           children: [
                             Text(
                               formatPrice(movers[i].price),
-                              style: AppTextStyles.number,
+                              style: AppTextStyles.NUMBER,
                             ),
                             Text(
                               formatRate(movers[i].changeRate),
-                              style: AppTextStyles.numberSmall.copyWith(
+                              style: AppTextStyles.NUMBER_SMALL.copyWith(
                                 color: AppColors.change(movers[i].changeRate),
                               ),
                             ),

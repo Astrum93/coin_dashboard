@@ -42,9 +42,9 @@ class PriceChartCard extends StatelessWidget {
                     children: [
                       CoinAvatar(symbol: 'BTC', size: 28),
                       SizedBox(width: 10),
-                      Text('비트코인', style: AppTextStyles.bodyStrong),
+                      Text('비트코인', style: AppTextStyles.BODY_STRONG),
                       SizedBox(width: 6),
-                      Text('BTC/KRW', style: AppTextStyles.caption),
+                      Text('BTC/KRW', style: AppTextStyles.CAPTION),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -58,11 +58,11 @@ class PriceChartCard extends StatelessWidget {
                       children: [
                         Text(
                           btc == null ? '-' : formatPrice(btc.price),
-                          style: AppTextStyles.priceDisplay,
+                          style: AppTextStyles.PRICE_DISPLAY,
                         ),
                         Text(
                           'KRW',
-                          style: AppTextStyles.caption.copyWith(fontSize: 16),
+                          style: AppTextStyles.CAPTION.copyWith(fontSize: 16),
                         ),
                         if (rate != null)
                           ChangeBadge(
@@ -92,7 +92,7 @@ class PriceChartCard extends StatelessWidget {
                 height: _chartHeight,
                 child: Center(
                   child: chartError != null
-                      ? Text(chartError, style: AppTextStyles.caption)
+                      ? Text(chartError, style: AppTextStyles.CAPTION)
                       : const CircularProgressIndicator(),
                 ),
               );
@@ -131,7 +131,7 @@ class _Chart extends StatelessWidget {
       ChartPeriod.year => 'yy.MM',
     };
     // 폰 너비에선 라벨이 겹치지 않게 3개만.
-    final count = MediaQuery.sizeOf(context).width < AppBreakpoints.tablet
+    final count = MediaQuery.sizeOf(context).width < AppBreakpoints.TABLET
         ? 3
         : 5;
     final step = (candles.length - 1) / (count - 1);
@@ -142,10 +142,10 @@ class _Chart extends StatelessWidget {
     final yLabels = [
       for (var i = 0; i < 4; i++) formatPrice(high - (high - low) * i / 3),
     ];
-    final axisStyle = AppTextStyles.numberSmall.copyWith(
+    final axisStyle = AppTextStyles.NUMBER_SMALL.copyWith(
       fontSize: 11,
       fontWeight: FontWeight.w400,
-      color: AppColors.textMuted,
+      color: AppColors.TEXT_MUTED,
     );
 
     return Row(
@@ -156,7 +156,7 @@ class _Chart extends StatelessWidget {
             children: [
               PriceAreaChart(
                 values: closes,
-                color: AppColors.accent,
+                color: AppColors.ACCENT,
                 height: height,
                 semanticLabel: '비트코인 ${period.label} 가격 추이 차트',
               ),

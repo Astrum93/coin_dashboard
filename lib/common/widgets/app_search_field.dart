@@ -20,7 +20,7 @@ class AppSearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     const border = OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(12)),
-      borderSide: BorderSide(color: AppColors.border),
+      borderSide: BorderSide(color: AppColors.BORDER),
     );
 
     return SizedBox(
@@ -28,23 +28,23 @@ class AppSearchField extends StatelessWidget {
       child: TextField(
         controller: controller,
         onChanged: onChanged,
-        style: AppTextStyles.body,
-        cursorColor: AppColors.accent,
+        style: AppTextStyles.BODY,
+        cursorColor: AppColors.ACCENT,
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: AppTextStyles.body.copyWith(color: AppColors.textMuted),
+          hintStyle: AppTextStyles.BODY.copyWith(color: AppColors.TEXT_MUTED),
           prefixIcon: const Icon(
             Icons.search_rounded,
             size: 18,
-            color: AppColors.textMuted,
+            color: AppColors.TEXT_MUTED,
           ),
           filled: true,
-          fillColor: AppColors.surface,
+          fillColor: AppColors.SURFACE,
           contentPadding: EdgeInsets.zero,
           border: border,
           enabledBorder: border,
           focusedBorder: border.copyWith(
-            borderSide: const BorderSide(color: AppColors.accent),
+            borderSide: const BorderSide(color: AppColors.ACCENT),
           ),
         ),
       ),

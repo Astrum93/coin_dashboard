@@ -26,7 +26,7 @@ class StatTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(label, style: AppTextStyles.caption),
+          Text(label, style: AppTextStyles.CAPTION),
           const SizedBox(height: 12),
           Row(
             crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -35,7 +35,7 @@ class StatTile extends StatelessWidget {
               Flexible(
                 child: Text(
                   value,
-                  style: AppTextStyles.numberLarge,
+                  style: AppTextStyles.NUMBER_LARGE,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -43,7 +43,7 @@ class StatTile extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   unit!,
-                  style: AppTextStyles.caption.copyWith(fontSize: 14),
+                  style: AppTextStyles.CAPTION.copyWith(fontSize: 14),
                 ),
               ],
             ],

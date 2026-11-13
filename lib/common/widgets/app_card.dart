@@ -20,9 +20,9 @@ class AppCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       padding: padding,
       decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(AppTheme.radiusCard),
-        border: Border.all(color: AppColors.border),
+        color: AppColors.SURFACE,
+        borderRadius: BorderRadius.circular(AppTheme.RADIUS_CARD),
+        border: Border.all(color: AppColors.BORDER),
       ),
       child: child,
     );

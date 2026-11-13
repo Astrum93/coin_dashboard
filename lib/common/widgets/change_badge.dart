@@ -29,7 +29,7 @@ class ChangeBadge extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: AppTextStyles.numberSmall.copyWith(color: color),
+        style: AppTextStyles.NUMBER_SMALL.copyWith(color: color),
       ),
     );
   }

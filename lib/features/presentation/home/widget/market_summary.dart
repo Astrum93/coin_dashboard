@@ -21,9 +21,9 @@ class MarketSummary extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final columns = constraints.maxWidth >= AppBreakpoints.desktop
+        final columns = constraints.maxWidth >= AppBreakpoints.DESKTOP
             ? 4
-            : constraints.maxWidth >= AppBreakpoints.compact
+            : constraints.maxWidth >= AppBreakpoints.COMPACT
             ? 2
             : 1;
         final width = (constraints.maxWidth - _gap * (columns - 1)) / columns;
@@ -47,7 +47,7 @@ class MarketSummary extends StatelessWidget {
               unit: '${total.unit} 원',
               footer: Text(
                 '원화 마켓 ${controller.tickers.length}종목 합계',
-                style: AppTextStyles.caption,
+                style: AppTextStyles.CAPTION,
               ),
             ),
             StatTile(
@@ -61,7 +61,7 @@ class MarketSummary extends StatelessWidget {
               value: '${controller.favorites.length}',
               unit: '개',
               footer: favoriteRate == null
-                  ? const Text('표에서 별을 눌러 추가', style: AppTextStyles.caption)
+                  ? const Text('표에서 별을 눌러 추가', style: AppTextStyles.CAPTION)
                   : ChangeBadge(rate: favoriteRate, suffix: '평균'),
             ),
           ];
@@ -102,12 +102,12 @@ class _RatioBar extends StatelessWidget {
             if (rise > 0)
               Expanded(
                 flex: rise,
-                child: const ColoredBox(color: AppColors.rise),
+                child: const ColoredBox(color: AppColors.RISE),
               ),
             if (fall > 0)
               Expanded(
                 flex: fall,
-                child: const ColoredBox(color: AppColors.fall),
+                child: const ColoredBox(color: AppColors.FALL),
               ),
           ],
         ),

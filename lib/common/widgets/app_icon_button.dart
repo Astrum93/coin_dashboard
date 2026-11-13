@@ -9,7 +9,7 @@ class AppIconButton extends StatelessWidget {
     required this.icon,
     required this.tooltip,
     required this.onPressed,
-    this.color = AppColors.textPrimary,
+    this.color = AppColors.TEXT_PRIMARY,
     this.bordered = true,
   });
 
@@ -32,12 +32,12 @@ class AppIconButton extends StatelessWidget {
       style: IconButton.styleFrom(
         fixedSize: const Size(44, 44),
         foregroundColor: color,
-        disabledForegroundColor: AppColors.textMuted,
-        backgroundColor: bordered ? AppColors.surface : Colors.transparent,
+        disabledForegroundColor: AppColors.TEXT_MUTED,
+        backgroundColor: bordered ? AppColors.SURFACE : Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           side: bordered
-              ? const BorderSide(color: AppColors.border)
+              ? const BorderSide(color: AppColors.BORDER)
               : BorderSide.none,
         ),
       ),
@@ -63,7 +63,7 @@ class FavoriteButton extends StatelessWidget {
     return AppIconButton(
       icon: isFavorite ? Icons.star_rounded : Icons.star_outline_rounded,
       tooltip: isFavorite ? '관심 해제' : '관심 추가',
-      color: isFavorite ? AppColors.accent : AppColors.textMuted,
+      color: isFavorite ? AppColors.ACCENT : AppColors.TEXT_MUTED,
       onPressed: onPressed,
       bordered: bordered,
     );
