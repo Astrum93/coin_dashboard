@@ -73,6 +73,7 @@ class CandleChartCard extends StatelessWidget {
                     mode: mode,
                     timePattern: _timePattern(period),
                     currentPrice: controller.detail.value?.price,
+                    changeRate: controller.detail.value?.changeRate ?? 0,
                   ),
                 ),
               ),

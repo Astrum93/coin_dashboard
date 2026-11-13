@@ -16,6 +16,7 @@ class CandleChartPainter extends CustomPainter {
     required this.mode,
     required this.timePattern,
     this.currentPrice,
+    this.changeRate = 0,
   });
 
   final List<Candle> candles;
@@ -26,6 +27,9 @@ class CandleChartPainter extends CustomPainter {
 
   /// 3초마다 갱신되는 현재가. 가로 점선과 축 태그로 표시한다.
   final double? currentPrice;
+
+  /// 전일 대비 등락률. 현재가 점선·태그 색을 헤더와 맞춘다.
+  final double changeRate;
 
   static const double volumeHeight = 56;
   static const double _axisWidth = 92;
@@ -194,7 +198,7 @@ class CandleChartPainter extends CustomPainter {
     double dy,
     double price,
   ) {
-    final color = price >= candles.last.open ? AppColors.RISE : AppColors.FALL;
+    final color = AppColors.change(changeRate);
     final paint = Paint()
       ..color = color.withValues(alpha: 0.7)
       ..strokeWidth = 1;
@@ -299,5 +303,6 @@ class CandleChartPainter extends CustomPainter {
       oldDelegate.candles != candles ||
       oldDelegate.mode != mode ||
       oldDelegate.timePattern != timePattern ||
-      oldDelegate.currentPrice != currentPrice;
+      oldDelegate.currentPrice != currentPrice ||
+      oldDelegate.changeRate != changeRate;
 }
