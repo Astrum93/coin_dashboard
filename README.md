@@ -1,16 +1,21 @@
 # coin_dashboard
 
-A new Flutter project.
+업비트 공개 시세 API로 원화(KRW) 마켓 코인 시세를 보여주는 Flutter 대시보드 앱입니다. 웹, Windows, Android, iOS에서 실행됩니다.
 
-## Getting Started
+- 상태관리·DI: GetX
+- 라우팅: go_router
+- 구조: 클린 아키텍처 (data / domain / presentation), freezed 모델
 
-This project is a starting point for a Flutter application.
+## 개발 일지
 
-A few resources to get you started if this is your first Flutter project:
+<!-- DEVLOG:START -->
+| 날짜 | 작업 |
+|---|---|
+| 2026-11-17 | 🚩 v1.1.0: 웹 배포, 그리고 아이폰 직접 설치 |
+| 2026-11-13 | 🚩 Android·iOS 플랫폼 추가와 코인 상세 화면 |
+| 2026-10-21 | 🚩 업비트 전환, 구조 재편, 디자인 가이드 적용 |
+| 2026-09-11 | 업비트 전환 준비: SDK 고정과 패키지 추가 |
+| 2026-07-13 | 코인 시세 기능 (BTC/KRW) |
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+→ [전체 개발 일지 보기](docs/DEVLOG.md)
+<!-- DEVLOG:END -->
