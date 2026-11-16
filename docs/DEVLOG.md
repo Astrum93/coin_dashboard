@@ -4,6 +4,17 @@
 
 이 앱이 만들어지는 과정을 날짜순으로 기록합니다. 최신 항목이 위에 있습니다.
 
+## 2026-11-17 · GitHub Pages 웹 배포 워크플로
+
+아이폰에서 대시보드를 쓰려고, 웹 빌드를 GitHub Pages에 자동 배포하는 워크플로를 추가했다. 배포된 주소를 Safari에서 "홈 화면에 추가"해 앱처럼 쓴다.
+
+- `.github/workflows/deploy-web.yml`: `main` push 또는 수동 실행 시 Flutter 3.44.6으로 웹 빌드 후 Pages 배포
+- `--base-href`는 저장소 이름에서 자동으로 가져옴(`/coin_dashboard/`)
+- 해시 URL 방식이라 상세 화면 새로고침용 404 처리는 넣지 않음
+- 저장소 Settings → Pages의 Source를 "GitHub Actions"로 바꿔야 배포됨
+
+`#배포` `#설정` `#GitHubActions` `#PWA`  ·  커밋: 94c2575
+
 ## 2026-11-13 · 🚩 Android·iOS 플랫폼 추가와 코인 상세 화면
 
 모바일 플랫폼을 추가하고 화면 폭·테마 상수를 정리한 뒤, 홈에서 코인을 누르면 열리는 상세 화면(`/coin/:symbol`)을 6단계로 나눠 만들었다.
