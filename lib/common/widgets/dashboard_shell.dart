@@ -45,20 +45,27 @@ class DashboardShell extends StatelessWidget {
             connected: connected,
             wide: wide,
           );
+          // 사이드바 배경은 노치·상태바 영역까지 칠하고, 내용만 안전 영역 안에 둔다.
           if (wide) {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                sidebar,
-                Expanded(child: child),
+                ColoredBox(
+                  color: AppColors.SIDEBAR,
+                  child: SafeArea(right: false, child: sidebar),
+                ),
+                Expanded(child: SafeArea(left: false, child: child)),
               ],
             );
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              sidebar,
-              Expanded(child: child),
+              ColoredBox(
+                color: AppColors.SIDEBAR,
+                child: SafeArea(bottom: false, child: sidebar),
+              ),
+              Expanded(child: SafeArea(top: false, child: child)),
             ],
           );
         },

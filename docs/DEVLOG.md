@@ -4,16 +4,18 @@
 
 이 앱이 만들어지는 과정을 날짜순으로 기록합니다. 최신 항목이 위에 있습니다.
 
-## 2026-11-17 · GitHub Pages 웹 배포 워크플로
+## 2026-11-17 · 🚩 v1.1.0: 웹 배포, 그리고 아이폰 직접 설치
 
-아이폰에서 대시보드를 쓰려고, 웹 빌드를 GitHub Pages에 자동 배포하는 워크플로를 추가했다. 배포된 주소를 Safari에서 "홈 화면에 추가"해 앱처럼 쓴다.
+아이폰에서 대시보드를 쓰려고 GitHub Pages 자동 배포를 만들었지만, 업비트가 브라우저(Origin 헤더) 요청을 10초당 1회로 제한해 배포본에서는 시세가 뜨지 않았다. 대신 아이폰에 네이티브 릴리스 빌드를 직접 설치하고, 실기기에서 드러난 문제를 고쳤다.
 
-- `.github/workflows/deploy-web.yml`: `main` push 또는 수동 실행 시 Flutter 3.44.6으로 웹 빌드 후 Pages 배포
-- `--base-href`는 저장소 이름에서 자동으로 가져옴(`/coin_dashboard/`)
-- 해시 URL 방식이라 상세 화면 새로고침용 404 처리는 넣지 않음
-- 저장소 Settings → Pages의 Source를 "GitHub Actions"로 바꿔야 배포됨
+- `.github/workflows/deploy-web.yml`: `main` push 시 Flutter 3.44.6으로 웹 빌드 후 Pages 배포(`--base-href`는 저장소 이름에서 가져옴)
+- 배포 출처의 요청은 `Remaining-Req: group=origin`으로 제한되고 초과분은 CORS 에러로 보임. `localhost`는 예외라 디버그에서는 드러나지 않았음
+- 버전 `1.1.0+2`, `dev` → `main` 스쿼시 머지 후 `v1.1.0` 태그
+- iOS 최소 버전을 13.0 → 15.0으로 올려 현재 Xcode에서 빌드되게 함
+- `DashboardShell`에 SafeArea 적용(배경은 화면 끝까지, 내용만 안전 영역 안)
+- iOS·Android 앱 아이콘을 대시보드 로고로 교체, 시작 화면 배경을 앱 배경색으로 변경
 
-`#배포` `#설정` `#GitHubActions` `#PWA`  ·  커밋: 94c2575
+`#배포` `#버그수정` `#UI` `#iOS` `#GitHubActions`  ·  커밋: 94c2575, 641204b, 2b3bd2a, ba96c07, 2e7290b
 
 ## 2026-11-13 · 🚩 Android·iOS 플랫폼 추가와 코인 상세 화면
 
